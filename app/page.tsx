@@ -49,6 +49,7 @@ export default function Home() {
   };
 
 
+
   const startMusic = async () => {
 
     const audio = audioRef.current;
@@ -64,6 +65,7 @@ export default function Home() {
 
       fadeInAudio(audio);
 
+
     } catch (err) {
 
       console.error(
@@ -76,43 +78,43 @@ export default function Home() {
   };
 
 
+
   const finishIntro = () => {
 
-    // começa a transição
+    // começa transição
 
     setTransitioning(true);
 
 
-    // troca para o convite no meio do fade
+    // troca para convite durante o fade
 
     setTimeout(() => {
 
       setOpened(true);
 
-    }, 1000);
+    }, 900);
 
 
-    // remove a camada
+
+    // remove transição
 
     setTimeout(() => {
 
       setTransitioning(false);
 
-    }, 2200);
+    }, 2000);
 
   };
+
 
 
   return (
 
     <main
       className="
-        flex
         min-h-screen
-        items-center
-        justify-center
-        bg-neutral-950
-        p-4
+        w-full
+        bg-[#FAF7F2]
       "
     >
 
@@ -121,16 +123,14 @@ export default function Home() {
           relative
           h-screen
           w-full
-          max-w-[430px]
-          max-h-[932px]
           overflow-hidden
-          rounded-[32px]
           bg-black
-          shadow-2xl
         "
       >
 
+
         <BackgroundMusic ref={audioRef} />
+
 
 
         {!opened ? (
@@ -140,9 +140,16 @@ export default function Home() {
             onFinish={finishIntro}
           />
 
+
         ) : (
 
-          <div className="animate-invite">
+          <div
+            className="
+              h-full
+              w-full
+              animate-invite
+            "
+          >
 
             <GoldenParticles />
 
@@ -156,7 +163,7 @@ export default function Home() {
 
 
 
-        {/* TRANSIÇÃO */}
+        {/* Transição envelope -> convite */}
 
         <div
           className={`
@@ -165,7 +172,7 @@ export default function Home() {
             inset-0
             z-[100]
 
-            bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.18),#FAF7F2_70%)]
+            bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.18),#FAF7F2_75%)]
 
             transition-opacity
             duration-[1200ms]
@@ -176,12 +183,12 @@ export default function Home() {
                 ? "opacity-100"
                 : "opacity-0"
             }
-
           `}
         />
 
 
       </div>
+
 
     </main>
 
