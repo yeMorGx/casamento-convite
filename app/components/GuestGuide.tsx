@@ -20,12 +20,26 @@ import FadeUp from "./FadeUp";
 
 export default function GuestGuide() {
   return (
-    <section className="relative flex h-screen snap-start items-center justify-center overflow-hidden bg-[#FAF7F2] px-5 py-8">
+    <section
+      className="relative flex h-screen snap-start items-center justify-center overflow-hidden px-5 py-8"
+      style={{ background: "var(--background)" }}
+    >
       {/* Fundo */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05),transparent_75%)]" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle_at_center, rgba(239,201,210,.12), transparent 75%)",
+        }}
+      />
 
       {/* Moldura */}
-      <div className="absolute inset-5 rounded-[26px] border-2 border-[#7D8A6B]" />
+      <div
+        className="absolute inset-5 rounded-[26px] border-2"
+        style={{
+          borderColor: "var(--color-primary-dark)",
+        }}
+      />
 
       {/* Flores */}
       <Image
@@ -46,25 +60,48 @@ export default function GuestGuide() {
 
       <div className="relative z-10 w-full max-w-[340px]">
         <FadeUp delay={0.1}>
-          <h2 className="text-center font-title text-5xl text-[#4E4A49]">
+          <h2
+            className="text-center font-title text-5xl"
+            style={{
+              color: "var(--color-primary-dark)",
+            }}
+          >
             Manual dos
           </h2>
 
-          <h3 className="mt-1 text-center font-title text-5xl text-[#4E4A49]">
+          <h3
+            className="mt-1 text-center font-title text-5xl"
+            style={{
+              color: "var(--color-primary-dark)",
+            }}
+          >
             Convidados
           </h3>
         </FadeUp>
 
         <FadeUp delay={0.2}>
           <div className="my-8 flex items-center justify-center gap-4">
-            <div className="h-px w-14 bg-[#7D8A6B]/40" />
+            <div
+              className="h-px w-14"
+              style={{
+                background: "rgba(217,144,164,.35)",
+              }}
+            />
 
             <Heart
               size={16}
-              className="fill-[#7D8A6B] text-[#7D8A6B]"
+              style={{
+                fill: "var(--color-primary-dark)",
+                color: "var(--color-primary-dark)",
+              }}
             />
 
-            <div className="h-px w-14 bg-[#7D8A6B]/40" />
+            <div
+              className="h-px w-14"
+              style={{
+                background: "rgba(217,144,164,.35)",
+              }}
+            />
           </div>
         </FadeUp>
 
@@ -132,35 +169,54 @@ export default function GuestGuide() {
 
         <FadeUp delay={0.8}>
           <div className="mt-10 flex items-center justify-center gap-4">
-            <span className="font-title text-5xl text-[#4E4A49]">
+            <span
+              className="font-title text-5xl"
+              style={{
+                color: "var(--color-primary-dark)",
+              }}
+            >
               C
             </span>
 
             <Heart
               size={18}
-              className="fill-[#7D8A6B] text-[#7D8A6B]"
+              style={{
+                fill: "var(--color-primary-dark)",
+                color: "var(--color-primary-dark)",
+              }}
             />
 
-            <span className="font-title text-5xl text-[#4E4A49]">
+            <span
+              className="font-title text-5xl"
+              style={{
+                color: "var(--color-primary-dark)",
+              }}
+            >
               W
             </span>
           </div>
         </FadeUp>
-      </div>
 
-      <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center text-[#8F7B7B]">
-        <p className="text-[10px] uppercase tracking-[0.3em]">
-          Deslize
-        </p>
+        <FadeUp delay={1}>
+          <div
+            className="absolute bottom-6 left-0 right-0 flex flex-col items-center"
+            style={{
+              color: "var(--text-secondary)",
+            }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.3em]">
+              Deslize
+            </p>
 
-        <span className="mt-2 animate-bounce text-lg">
-          ↓
-        </span>
+            <span className="mt-2 animate-bounce text-lg">
+              ↓
+            </span>
+          </div>
+        </FadeUp>
       </div>
     </section>
   );
 }
-
 interface GuideItemProps {
   icon: React.ReactNode;
   text: string;
@@ -172,11 +228,21 @@ function GuideItem({
 }: GuideItemProps) {
   return (
     <div className="flex flex-col items-center px-2 text-center">
-      <div className="mb-3 text-[#7D8A6B]">
+      <div
+        className="mb-3"
+        style={{
+          color: "var(--color-primary-dark)",
+        }}
+      >
         {icon}
       </div>
 
-      <p className="text-[11px] font-semibold uppercase leading-4 tracking-wide text-[#55504C]">
+      <p
+        className="text-[11px] font-semibold uppercase leading-4 tracking-wide"
+        style={{
+          color: "var(--text-primary)",
+        }}
+      >
         {text}
       </p>
     </div>

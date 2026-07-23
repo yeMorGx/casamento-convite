@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { Gift, Copy, Heart, Check } from "lucide-react";
 
-import Countdown from "./Countdown";
 import FadeUp from "./FadeUp";
 
 export default function GiftSection() {
   // ALTERAR
   const pixKey = "11999999999";
-  const giftListUrl = "https://www.google.com"; // Trocar pela lista real
+  const giftListUrl = "https://www.google.com";
 
   const [copied, setCopied] = useState(false);
 
@@ -28,33 +27,56 @@ export default function GiftSection() {
   };
 
   return (
-    <section className="relative flex h-screen snap-start items-center justify-center overflow-hidden bg-[#FAF7F2] px-8">
+    <section
+      className="relative flex h-screen snap-start items-center justify-center overflow-hidden px-8"
+      style={{ background: "var(--background)" }}
+    >
       {/* Fundo */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06),transparent_70%)]" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at center, rgba(239,201,210,.12), transparent 70%)",
+        }}
+      />
 
       <div className="relative z-10 flex w-full max-w-sm flex-col items-center text-center">
-        
-
         <FadeUp delay={0.25}>
           <Heart
-            className="mb-6 text-[#B08D57]"
+            className="mb-6"
             size={30}
             strokeWidth={1.5}
+            style={{ color: "var(--color-primary-dark)" }}
           />
         </FadeUp>
 
         <FadeUp delay={0.35}>
-          <h2 className="font-title text-5xl text-[#7A5C4D]">
+          <h2
+            className="font-title text-5xl"
+            style={{
+              color: "var(--color-primary-dark)",
+            }}
+          >
             Lista de Presentes
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.45}>
-          <p className="mt-8 leading-8 text-[#6E5A5A]">
+          <p
+            className="mt-8 leading-8"
+            style={{
+              color: "var(--text-primary)",
+            }}
+          >
             Sua presença já é o nosso maior presente.
           </p>
 
-          <p className="mt-4 leading-8 text-[#6E5A5A]">
+          <p
+            className="mt-4 leading-8"
+            style={{
+              color: "var(--text-primary)",
+            }}
+          >
             Se desejar nos presentear, você pode escolher um
             item da nossa lista ou utilizar nossa chave Pix.
           </p>
@@ -73,26 +95,40 @@ export default function GiftSection() {
               gap-3
               rounded-full
               border
-              border-[#B08D57]
-              bg-white/60
+              bg-white/70
               px-6
               py-4
-              text-[#7A5C4D]
               shadow-sm
               backdrop-blur
               transition-all
               duration-300
               hover:scale-[1.03]
-              hover:bg-[#B08D57]
-              hover:text-white
             "
+            style={{
+              borderColor: "var(--color-primary-dark)",
+              color: "var(--color-primary-dark)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background =
+                "var(--color-primary-dark)";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background =
+                "rgba(255,255,255,.7)";
+              e.currentTarget.style.color =
+                "var(--color-primary-dark)";
+            }}
           >
-            <Gift size={20} />
+            <Gift
+              size={20}
+              style={{ color: "var(--color-green)" }}
+            />
+
             Ver lista de presentes
           </button>
         </FadeUp>
-
-        {/* Pix */}
+                {/* Pix */}
         <FadeUp delay={0.75}>
           <button
             onClick={copyPix}
@@ -104,7 +140,6 @@ export default function GiftSection() {
               justify-center
               gap-3
               rounded-full
-              bg-[#B08D57]
               px-6
               py-4
               text-white
@@ -113,6 +148,9 @@ export default function GiftSection() {
               duration-300
               hover:scale-[1.03]
             "
+            style={{
+              background: "var(--color-primary-dark)",
+            }}
           >
             {copied ? <Check size={20} /> : <Copy size={18} />}
 
@@ -128,25 +166,42 @@ export default function GiftSection() {
               w-full
               rounded-3xl
               border
-              border-[#D4AF37]/20
-              bg-white/60
               p-5
               shadow-sm
               backdrop-blur
             "
+            style={{
+              borderColor: "var(--color-primary-light)",
+              background: "#fff8fa",
+            }}
           >
-            <p className="text-xs uppercase tracking-[0.3em] text-[#B08D57]">
+            <p
+              className="text-xs uppercase tracking-[0.3em]"
+              style={{
+                color: "var(--color-gold)",
+              }}
+            >
               Chave Pix
             </p>
 
-            <p className="mt-3 break-all text-lg font-medium text-[#7A5C4D]">
+            <p
+              className="mt-3 break-all text-lg font-medium"
+              style={{
+                color: "var(--color-primary-dark)",
+              }}
+            >
               {pixKey}
             </p>
           </div>
         </FadeUp>
 
         <FadeUp delay={1}>
-          <p className="mt-10 text-center text-sm italic text-[#8E7A72]">
+          <p
+            className="mt-10 text-center text-sm italic"
+            style={{
+              color: "var(--text-secondary)",
+            }}
+          >
             Agradecemos por compartilhar este momento tão especial conosco. 🤍
           </p>
         </FadeUp>

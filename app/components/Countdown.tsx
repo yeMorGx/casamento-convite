@@ -43,11 +43,21 @@ export default function Countdown() {
 
   return (
     <div className="mb-14 flex flex-col items-center">
-      <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#B08D57]">
+      <p
+        className="mb-5 text-xs uppercase tracking-[0.35em]"
+        style={{ color: "var(--color-gold)" }}
+      >
         Faltam apenas
       </p>
 
-      <div className="flex items-end gap-3">
+      <div
+        className="flex items-end gap-4 rounded-3xl px-8 py-6 shadow-lg"
+        style={{
+          background: "var(--color-surface)",
+          borderColor: "var(--color-border)",
+          boxShadow: "0 12px 30px var(--shadow-soft)",
+        }}
+      >
         <Number value={timeLeft.days} label="Dias" />
         <Separator />
         <Number value={timeLeft.hours} label="Horas" />
@@ -68,12 +78,18 @@ function Number({
   label: string;
 }) {
   return (
-    <div className="flex flex-col items-center">
-      <span className="font-body text-5xl leading-none text-[#7A5C4D]">
+    <div className="flex min-w-[72px] flex-col items-center">
+      <span
+        className="font-body text-5xl leading-none"
+        style={{ color: "var(--color-primary-dark)" }}
+      >
         {value}
       </span>
 
-      <span className="mt-2 text-[11px] uppercase tracking-[0.25em] text-[#9B8B84]">
+      <span
+        className="mt-3 text-[11px] uppercase tracking-[0.25em]"
+        style={{ color: "var(--text-secondary)" }}
+      >
         {label}
       </span>
     </div>
@@ -82,7 +98,10 @@ function Number({
 
 function Separator() {
   return (
-    <span className="pb-6 text-3xl text-[#D4AF37]/60">
+    <span
+      className="pb-6 text-3xl"
+      style={{ color: "var(--color-gold)" }}
+    >
       :
     </span>
   );
