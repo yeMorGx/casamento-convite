@@ -7,7 +7,7 @@ import FadeUp from "./FadeUp";
 
 export default function GiftSection() {
   // ALTERAR
-  const pixKey = "11999999999";
+  const pixKey = "celmacardosozn@gmail.com";
   const giftListUrl = "https://www.google.com";
 
   const [copied, setCopied] = useState(false);
@@ -77,8 +77,8 @@ export default function GiftSection() {
               color: "var(--text-primary)",
             }}
           >
-            Se desejar nos presentear, você pode escolher um
-            item da nossa lista ou utilizar nossa chave Pix.
+            Se desejar nos presentear, você pode escolher um item da nossa lista
+            ou utilizar nossa chave Pix.
           </p>
         </FadeUp>
 
@@ -109,26 +109,19 @@ export default function GiftSection() {
               color: "var(--color-primary-dark)",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background =
-                "var(--color-primary-dark)";
+              e.currentTarget.style.background = "var(--color-primary-dark)";
               e.currentTarget.style.color = "#fff";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background =
-                "rgba(255,255,255,.7)";
-              e.currentTarget.style.color =
-                "var(--color-primary-dark)";
+              e.currentTarget.style.background = "rgba(255,255,255,.7)";
+              e.currentTarget.style.color = "var(--color-primary-dark)";
             }}
           >
-            <Gift
-              size={20}
-              style={{ color: "var(--color-green)" }}
-            />
-
+            <Gift size={20} style={{ color: "var(--color-green)" }} />
             Ver lista de presentes
           </button>
         </FadeUp>
-                {/* Pix */}
+        {/* Pix */}
         <FadeUp delay={0.75}>
           <button
             onClick={copyPix}
