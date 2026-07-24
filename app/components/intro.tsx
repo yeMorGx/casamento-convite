@@ -13,7 +13,8 @@ export default function Intro({
 }: IntroProps) {
   const [started, setStarted] = useState(false);
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const cellVideoRef = useRef<HTMLVideoElement>(null);
+  const deskVideoRef = useRef<HTMLVideoElement>(null);
 
   const startVideo = async () => {
     if (started) return;
@@ -22,14 +23,15 @@ export default function Intro({
 
     onStart();
 
-    const video = videoRef.current;
-
-    if (!video) return;
-
     try {
-      video.currentTime = 0;
-
-      await video.play();
+      if (cellVideoRef.current) {
+        cellVideoRef.current.currentTime = 0;
+        cellVideoRef.current.play().catch((err) => console.error(err));
+      }
+      if (deskVideoRef.current) {
+        deskVideoRef.current.currentTime = 0;
+        deskVideoRef.current.play().catch((err) => console.error(err));
+      }
     } catch (err) {
       console.error(
         "Erro ao iniciar vídeo:",
@@ -52,50 +54,34 @@ export default function Intro({
       }}
       onClick={startVideo}
     >
-      {/* Aviso versão teste */}
-      <div
-        className="
-          absolute
-          top-9
-          left-1/2
-          -translate-x-1/2
-          z-20
-
-          rounded-full
-          border
-          px-5
-          py-2
-
-          backdrop-blur-sm
-        "
-        style={{
-          borderColor: "rgba(217,144,164,.35)",
-          background: "rgba(255,248,250,.45)",
-        }}
-      >
-        <p
-          className="
-            text-[10px]
-            uppercase
-            tracking-[0.35em]
-          "
-          style={{
-            color: "var(--color-primary-dark)",
-          }}
-        >
-          Versão teste
-        </p>
-      </div>
-
       <video
-        ref={videoRef}
-        src="/video/envelope.mp4"
+        ref={cellVideoRef}
+        src="/video/cellvideo.mp4"
         className="
           absolute
           inset-0
           h-full
           w-full
           object-cover
+          md:hidden
+        "
+        playsInline
+        preload="auto"
+        muted
+        onEnded={onFinish}
+      />
+
+      <video
+        ref={deskVideoRef}
+        src="/video/deskvideo.mp4"
+        className="
+          absolute
+          inset-0
+          h-full
+          w-full
+          object-cover
+          hidden
+          md:block
         "
         playsInline
         preload="auto"
@@ -116,34 +102,58 @@ export default function Intro({
       <div
         className={`
           absolute
-          bottom-24
+          bottom-20
           left-1/2
           -translate-x-1/2
 
           transition-all
           duration-700
+          ease-out
 
           ${
             started
-              ? "opacity-0 translate-y-3"
-              : "opacity-100 translate-y-0"
+              ? "opacity-0 translate-y-8 scale-95"
+              : "opacity-100 translate-y-0 scale-100"
           }
         `}
       >
-        <p
+        <div
           className="
-            animate-pulse
-            text-sm
-            uppercase
-            tracking-[0.35em]
+            flex
+            items-center
+            gap-4
+            rounded-full
+            bg-white/10
+            px-7
+            py-4
+            backdrop-blur-md
+            border
+            border-white/20
+            shadow-[0_8px_32px_rgba(0,0,0,0.15)]
           "
-          style={{
-            color: "#ffffff",
-            textShadow: "0 2px 12px rgba(0,0,0,.35)",
-          }}
         >
-          Toque para abrir
-        </p>
+          {/* Bolinha pulsante */}
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+          </span>
+
+          <p
+            className="
+            w-50
+              text-[11px]
+              uppercase
+              tracking-[0.5em]
+              font-medium
+            "
+            style={{
+              color: "#ffffff",
+              textShadow: "0 2px 10px rgba(0,0,0,.3)",
+            }}
+          >
+            Toque para abrir
+          </p>
+        </div>
       </div>
     </div>
   );

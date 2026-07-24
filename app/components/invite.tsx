@@ -4,6 +4,8 @@ import FadeUp from "./FadeUp";
 import FinalSection from "./FinalSection";
 import CreatorPage from "./CreatorPage";
 
+import Image from "next/image";
+
 export default function Invitation() {
   const mapsUrl =
     "https://www.google.com/maps/search/?api=1&query=Paróquia+Sagrada+Família+Praça+Dr.+Bruno+Barbosa+150+Castelo+Santos+SP";
@@ -50,16 +52,6 @@ export default function Invitation() {
 
         {/* Conteúdo */}
         <div className="relative z-10 flex flex-1 flex-col items-center">
-          <FadeUp delay={0.1}>
-            <p
-              className="font-body text-3xl tracking-[0.45em]"
-              style={{
-                color: "var(--color-gold)",
-              }}
-            >
-              C&W
-            </p>
-          </FadeUp>
 
           <FadeUp delay={0.25}>
             <h1 className="mt-8 text-center leading-none">
@@ -189,7 +181,18 @@ export default function Invitation() {
               Abrir localização
             </button>
           </FadeUp>
-                  </div>
+          <FadeUp delay={1}>
+            <p className="text-center text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
+              <span className="font-body">Contamos com a sua presença!</span>
+            </p>
+          </FadeUp>
+          <FadeUp delay={1.5}>
+          
+            <Image className="mt-5"
+             src="/lacre.png" alt="Lacre" width={100} height={100} />
+          </FadeUp>
+
+        </div>
 
         {/* Indicador */}
         <FadeUp delay={1.2}>

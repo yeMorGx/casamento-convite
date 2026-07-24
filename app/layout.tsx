@@ -24,9 +24,28 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body
-        className={`${cormorant.variable} ${greatVibes.variable} antialiased`}
+        className={`${cormorant.variable} ${greatVibes.variable} antialiased relative`}
       >
         {children}
+
+        {/* Marca d'água */}
+        <div className="pointer-events-none fixed bottom-5 right-5 z-50 opacity-[0.12] mix-blend-difference transition-all duration-700 md:bottom-8 md:right-8">
+          <svg
+            viewBox="0 0 325 323.45"
+            className="h-6 w-6 md:h-7 md:w-7"
+            fill="white"
+          >
+            <path d="M325,226.72v65c0,17.52-14.2,31.72-31.72,31.72H31.72c-17.52,0-31.72-14.2-31.72-31.72V31.72C0,14.2,14.2,0,31.72,0h66.55c17.52,0,31.72,14.2,31.72,31.72v1.55c0,17.52-14.2,31.72-31.72,31.72h-1.55c-17.52,0-31.72,14.2-31.72,31.72v130c0,17.52,14.2,31.72,31.72,31.72h131.55c17.52,0,31.72-14.2,31.72-31.72h0c0-17.52,14.2-31.73,31.72-31.73h1.55c17.52,0,31.72,14.2,31.72,31.72Z" />
+            <rect
+              x="130"
+              y="130"
+              width="130"
+              height="63.45"
+              rx="31.72"
+              ry="31.72"
+            />
+          </svg>
+        </div>
       </body>
     </html>
   );
