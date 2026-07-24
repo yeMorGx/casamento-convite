@@ -78,9 +78,9 @@ function Number({
   label: string;
 }) {
   return (
-    <div className="flex min-w-[72px] flex-col items-center">
+    <div className="flex min-w-[52px] md:min-w-[72px] flex-col items-center">
       <span
-        className="font-body text-5xl leading-none"
+        className="font-body text-4xl md:text-5xl leading-none"
         style={{ color: "var(--color-primary-dark)" }}
       >
         {value}

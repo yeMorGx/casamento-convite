@@ -24,7 +24,7 @@ export default function Invitation() {
       "
     >
       <section
-        className="relative flex min-h-[100svh] snap-start flex-col items-center overflow-hidden px-8 py-12 md:py-24"
+        className="relative flex h-[100svh] snap-start flex-col items-center overflow-hidden px-8 pt-16 pb-10"
         style={{ background: "var(--background)" }}
       >
         {/* Fundo */}
@@ -55,7 +55,7 @@ export default function Invitation() {
         <div className="relative z-10 flex flex-1 flex-col items-center">
 
           <FadeUp delay={0.25}>
-            <h1 className="mt-4 md:mt-8 text-center leading-none">
+            <h1 className="mt-2 md:mt-8 text-center leading-tight">
               <span
                 className="font-title text-5xl sm:text-[68px]"
                 style={{
@@ -65,9 +65,9 @@ export default function Invitation() {
                 Celma
               </span>
 
-              <div className="my-3">
+              <div className="my-1 md:my-3">
                 <span
-                  className="font-body text-2xl"
+                  className="font-body text-xl md:text-2xl"
                   style={{
                     color: "var(--color-gold)",
                   }}
@@ -89,7 +89,7 @@ export default function Invitation() {
 
           <FadeUp delay={0.4}>
             <div
-              className="my-4 md:my-8 h-px w-24"
+              className="my-2 md:my-4 h-px w-24"
               style={{
                 background: "rgba(207,167,93,.35)",
               }}
@@ -119,9 +119,9 @@ export default function Invitation() {
           </FadeUp>
 
           <FadeUp delay={0.7}>
-            <div className="mt-6 md:mt-12 text-center">
+            <div className="mt-3 md:mt-12 text-center">
               <h2
-                className="mb-2 md:mb-4 font-body text-2xl md:text-3xl italic"
+                className="mb-1 md:mb-4 font-body text-xl md:text-3xl italic"
                 style={{
                   color: "var(--color-primary-dark)",
                 }}
@@ -148,7 +148,7 @@ export default function Invitation() {
             <button
               onClick={() => window.open(mapsUrl, "_blank")}
               className="
-                mt-6
+                mt-4
                 md:mt-10
                 rounded-full
                 border
@@ -189,8 +189,7 @@ export default function Invitation() {
             </p>
           </FadeUp>
           <FadeUp delay={1.5}>
-
-            <Image className="mt-5"
+            <Image className="mt-2 md:mt-5 w-14 h-14 md:w-[100px] md:h-[100px]"
               src="/lacre.png" alt="Lacre" width={100} height={100} />
           </FadeUp>
 
