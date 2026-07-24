@@ -1,224 +1,300 @@
+"use client";
+
+import { useState } from "react";
 import GuestGuide from "./GuestGuide";
 import GiftSection from "./GiftSection";
 import FadeUp from "./FadeUp";
 import FinalSection from "./FinalSection";
 import CreatorPage from "./CreatorPage";
-
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const TOTAL_SECTIONS = 5;
 
 export default function Invitation() {
+  const [current, setCurrent] = useState(0);
+  const [visible, setVisible] = useState(true);
+
   const mapsUrl =
     "https://www.google.com/maps/search/?api=1&query=Paróquia+Sagrada+Família+Praça+Dr.+Bruno+Barbosa+150+Castelo+Santos+SP";
 
-  return (
-    <main
-      className="
-        h-screen
-        w-full
-        overflow-y-scroll
-        snap-y
-        snap-mandatory
-        scroll-smooth
-        no-scrollbar
-      "
+  const navigate = (index: number) => {
+    if (index < 0 || index >= TOTAL_SECTIONS) return;
+    setVisible(false);
+    setTimeout(() => {
+      setCurrent(index);
+      setVisible(true);
+    }, 320);
+  };
+
+  const mainSection = (
+    <section
+      className="relative flex h-full flex-col items-center overflow-hidden px-8 pt-16 pb-24"
+      style={{ background: "var(--background)" }}
     >
-      <section
-        className="relative flex h-[100svh] snap-start flex-col items-center overflow-hidden px-8 pt-16 pb-10"
-        style={{ background: "var(--background)" }}
-      >
-        {/* Fundo */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at center, rgba(239,201,210,.10), transparent 70%)",
-          }}
-        />
 
-        {/* Decoração */}
-        <div
-          className="absolute left-6 top-6 h-32 w-32 rounded-full blur-3xl"
-          style={{
-            background: "rgba(217,144,164,.10)",
-          }}
-        />
+      {/* Fundo */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(circle at center, rgba(239,201,210,.10), transparent 70%)",
+        }}
+      />
 
-        <div
-          className="absolute bottom-0 right-0 h-40 w-40 rounded-full blur-3xl"
-          style={{
-            background: "rgba(239,201,210,.20)",
-          }}
-        />
+      {/* Decoração */}
+      <div
+        className="absolute left-6 top-6 h-32 w-32 rounded-full blur-3xl"
+        style={{
+          background: "rgba(217,144,164,.10)",
+        }}
+      />
 
-        {/* Conteúdo */}
-        <div className="relative z-10 flex flex-1 flex-col items-center">
+      <div
+        className="absolute bottom-0 right-0 h-40 w-40 rounded-full blur-3xl"
+        style={{
+          background: "rgba(239,201,210,.20)",
+        }}
+      />
 
-          <FadeUp delay={0.25}>
-            <h1 className="mt-2 md:mt-8 text-center leading-tight">
-              <span
-                className="font-title text-5xl sm:text-[68px]"
-                style={{
-                  color: "var(--color-primary-dark)",
-                }}
-              >
-                Celma
-              </span>
+      {/* Conteúdo */}
+      <div className="relative z-10 flex flex-1 flex-col items-center">
 
-              <div className="my-1 md:my-3">
-                <span
-                  className="font-body text-xl md:text-2xl"
-                  style={{
-                    color: "var(--color-gold)",
-                  }}
-                >
-                  &
-                </span>
-              </div>
-
-              <span
-                className="font-title text-5xl sm:text-[68px]"
-                style={{
-                  color: "var(--color-primary-dark)",
-                }}
-              >
-                Williams
-              </span>
-            </h1>
-          </FadeUp>
-
-          <FadeUp delay={0.4}>
-            <div
-              className="my-2 md:my-4 h-px w-24"
+        <FadeUp delay={0.25}>
+          <h1 className="mt-2 md:mt-8 text-center leading-tight">
+            <span
+              className="font-title text-5xl sm:text-[68px]"
               style={{
-                background: "rgba(207,167,93,.35)",
-              }}
-            />
-          </FadeUp>
-
-          <FadeUp delay={0.55}>
-            <div className="text-center">
-              <p
-                className="font-body text-2xl md:text-3xl"
-                style={{
-                  color: "var(--text-primary)",
-                }}
-              >
-                29 de Agosto de 2026
-              </p>
-
-              <p
-                className="mt-2 text-xs uppercase tracking-[0.35em]"
-                style={{
-                  color: "var(--text-secondary)",
-                }}
-              >
-                Sábado • 17:00
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.7}>
-            <div className="mt-3 md:mt-12 text-center">
-              <h2
-                className="mb-1 md:mb-4 font-body text-xl md:text-3xl italic"
-                style={{
-                  color: "var(--color-primary-dark)",
-                }}
-              >
-                Cerimônia
-              </h2>
-
-              <p
-                className="max-w-xs text-sm leading-7"
-                style={{
-                  color: "var(--text-primary)",
-                }}
-              >
-                Paróquia Sagrada Família
-                <br />
-                Praça Dr. Bruno Barbosa, 150
-                <br />
-                Castelo • Santos • SP
-              </p>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.9}>
-            <button
-              onClick={() => window.open(mapsUrl, "_blank")}
-              className="
-                mt-4
-                md:mt-10
-                rounded-full
-                border
-                bg-white/50
-                px-8
-                py-3
-                text-sm
-                uppercase
-                tracking-[0.2em]
-                shadow-sm
-                backdrop-blur
-                transition-all
-                duration-300
-                hover:scale-105
-              "
-              style={{
-                borderColor: "var(--color-primary-dark)",
                 color: "var(--color-primary-dark)",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background =
-                  "var(--color-primary-dark)";
-                e.currentTarget.style.color = "#fff";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background =
-                  "rgba(255,255,255,.5)";
-                e.currentTarget.style.color =
-                  "var(--color-primary-dark)";
+            >
+              Celma
+            </span>
+
+            <div className="my-1 md:my-3">
+              <span
+                className="font-body text-xl md:text-2xl"
+                style={{
+                  color: "var(--color-gold)",
+                }}
+              >
+                &
+              </span>
+            </div>
+
+            <span
+              className="font-title text-5xl sm:text-[68px]"
+              style={{
+                color: "var(--color-primary-dark)",
               }}
             >
-              Abrir localização
-            </button>
-          </FadeUp>
-          <FadeUp delay={1}>
-            <p className="text-center text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
-              <span className="font-body">Contamos com a sua presença!</span>
-            </p>
-          </FadeUp>
-          <FadeUp delay={1.5}>
-            <Image className="mt-2 md:mt-5 w-14 h-14 md:w-[100px] md:h-[100px]"
-              src="/lacre.png" alt="Lacre" width={100} height={100} />
-          </FadeUp>
+              Williams
+            </span>
+          </h1>
+        </FadeUp>
 
-        </div>
-
-        {/* Indicador */}
-        <FadeUp delay={1.2}>
+        <FadeUp delay={0.4}>
           <div
-            className="absolute bottom-8 left-0 right-0 z-10 flex flex-col items-center"
+            className="my-2 md:my-4 h-px w-24"
             style={{
-              color: "var(--text-secondary)",
+              background: "rgba(207,167,93,.35)",
             }}
-          >
-            <p className="text-[11px] uppercase tracking-[0.25em]">
-              Deslize
+          />
+        </FadeUp>
+
+        <FadeUp delay={0.55}>
+          <div className="text-center">
+            <p
+              className="font-body text-2xl md:text-3xl"
+              style={{
+                color: "var(--text-primary)",
+              }}
+            >
+              29 de Agosto de 2026
             </p>
 
-            <ChevronDown className="mt-2 animate-bounce" size={20} />
+            <p
+              className="mt-2 text-xs uppercase tracking-[0.35em]"
+              style={{
+                color: "var(--text-secondary)",
+              }}
+            >
+              Sábado • 17:00
+            </p>
           </div>
         </FadeUp>
-      </section>
 
-      <GuestGuide />
+        <FadeUp delay={0.7}>
+          <div className="mt-3 md:mt-12 text-center">
+            <h2
+              className="mb-1 md:mb-4 font-body text-xl md:text-3xl italic"
+              style={{
+                color: "var(--color-primary-dark)",
+              }}
+            >
+              Cerimônia
+            </h2>
 
-      <GiftSection />
+            <p
+              className="max-w-xs text-sm leading-7"
+              style={{
+                color: "var(--text-primary)",
+              }}
+            >
+              Paróquia Sagrada Família
+              <br />
+              Praça Dr. Bruno Barbosa, 150
+              <br />
+              Castelo • Santos • SP
+            </p>
+          </div>
+        </FadeUp>
 
-      <FinalSection />
+        <FadeUp delay={0.9}>
+          <button
+            onClick={() => window.open(mapsUrl, "_blank")}
+            className="
+              mt-4
+              md:mt-10
+              rounded-full
+              border
+              bg-white/50
+              px-8
+              py-3
+              text-sm
+              uppercase
+              tracking-[0.2em]
+              shadow-sm
+              backdrop-blur
+              transition-all
+              duration-300
+              hover:scale-105
+            "
+            style={{
+              borderColor: "var(--color-primary-dark)",
+              color: "var(--color-primary-dark)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--color-primary-dark)";
+              e.currentTarget.style.color = "#fff";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,.5)";
+              e.currentTarget.style.color = "var(--color-primary-dark)";
+            }}
+          >
+            Abrir localização
+          </button>
+        </FadeUp>
 
-      <CreatorPage />
+        <FadeUp delay={1}>
+          <p className="text-center text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
+            <span className="font-body">Contamos com a sua presença!</span>
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={1.5}>
+          <Image
+            className="mt-2 md:mt-5 w-14 h-14 md:w-[100px] md:h-[100px]"
+            src="/lacre.png"
+            alt="Lacre"
+            width={100}
+            height={100}
+          />
+        </FadeUp>
+      </div>
+    </section>
+  );
+
+  const sections = [
+    mainSection,
+    <GuestGuide key="guide" />,
+    <GiftSection key="gifts" />,
+    <FinalSection key="final" />,
+    <CreatorPage key="creator" />,
+  ];
+
+  return (
+    <main
+      className="relative h-[100svh] w-full overflow-hidden"
+      style={{ background: "var(--background)" }}
+    >
+      {/* Section content with fade transition */}
+      <div
+        className="h-full w-full transition-opacity duration-300"
+        style={{ opacity: visible ? 1 : 0 }}
+      >
+        {sections[current]}
+      </div>
+
+      {/* Back button */}
+      {current > 0 && (
+        <button
+          onClick={() => navigate(current - 1)}
+          className="
+            fixed top-5 left-4 z-50
+            flex items-center gap-1.5
+            rounded-full
+            px-4 py-2
+            text-xs uppercase tracking-[0.2em]
+            backdrop-blur-sm
+            transition-all duration-200
+            hover:scale-105 active:scale-95
+          "
+          style={{
+            background: "rgba(255,255,255,0.55)",
+            border: "1px solid rgba(217,144,164,0.3)",
+            color: "var(--color-primary-dark)",
+          }}
+        >
+          <ChevronLeft size={14} />
+          Voltar
+        </button>
+      )}
+
+      {/* Next button — not shown on last section (CreatorPage) */}
+      {current < TOTAL_SECTIONS - 1 && (
+        <button
+          onClick={() => navigate(current + 1)}
+          className="
+            fixed bottom-8 left-1/2 z-50
+            -translate-x-1/2
+            flex items-center gap-2
+            rounded-full
+            px-8 py-3.5
+            text-sm uppercase tracking-[0.2em]
+            text-white
+            shadow-lg
+            transition-all duration-200
+            hover:scale-105 active:scale-95
+          "
+          style={{
+            background: "var(--color-primary-dark)",
+          }}
+        >
+          Próximo
+          <ChevronRight size={16} />
+        </button>
+      )}
+
+      {/* Progress dots */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1.5">
+        {Array.from({ length: TOTAL_SECTIONS }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => navigate(i)}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === current ? "20px" : "6px",
+              height: "6px",
+              background:
+                i === current
+                  ? "var(--color-primary-dark)"
+                  : "rgba(217,144,164,0.4)",
+            }}
+          />
+        ))}
+      </div>
     </main>
   );
 }

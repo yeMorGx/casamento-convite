@@ -7,7 +7,7 @@ import Countdown from "./Countdown";
 export default function FinalSection() {
   return (
     <section
-      className="relative flex min-h-[100svh] w-full snap-start items-center justify-center overflow-hidden px-8 py-10 md:py-20"
+      className="relative flex h-full w-full snap-start items-center justify-center overflow-y-auto px-8 py-10 md:py-20"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}

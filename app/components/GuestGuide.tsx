@@ -21,7 +21,7 @@ import FadeUp from "./FadeUp";
 export default function GuestGuide() {
   return (
     <section
-      className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-y-auto px-5 py-6 md:py-8"
+      className="relative flex h-full snap-start items-start justify-center overflow-y-auto px-5 py-6 md:py-8"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
