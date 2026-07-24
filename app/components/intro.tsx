@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface IntroProps {
   onStart: () => void;
@@ -12,6 +12,7 @@ export default function Intro({
   onFinish,
 }: IntroProps) {
   const [started, setStarted] = useState(false);
+  const finishedRef = React.useRef(false);
 
   const cellVideoRef = useRef<HTMLVideoElement>(null);
   const deskVideoRef = useRef<HTMLVideoElement>(null);
@@ -37,6 +38,17 @@ export default function Intro({
         "Erro ao iniciar vídeo:",
         err
       );
+    }
+  };
+
+  const handleTimeUpdate = (
+    videoRef: React.RefObject<HTMLVideoElement>
+  ) => {
+    const video = videoRef.current;
+    if (!video || finishedRef.current) return;
+    if (video.duration && video.currentTime >= video.duration - 2) {
+      finishedRef.current = true;
+      onFinish();
     }
   };
 
@@ -68,6 +80,7 @@ export default function Intro({
         playsInline
         preload="auto"
         muted
+        onTimeUpdate={() => handleTimeUpdate(cellVideoRef)}
         onEnded={onFinish}
       />
 
@@ -86,6 +99,7 @@ export default function Intro({
         playsInline
         preload="auto"
         muted
+        onTimeUpdate={() => handleTimeUpdate(deskVideoRef)}
         onEnded={onFinish}
       />
 

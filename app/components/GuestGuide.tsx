@@ -21,7 +21,7 @@ import FadeUp from "./FadeUp";
 export default function GuestGuide() {
   return (
     <section
-      className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-hidden px-5 py-6 md:py-8"
+      className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-y-auto px-5 py-6 md:py-8"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -80,7 +80,7 @@ export default function GuestGuide() {
         </FadeUp>
 
         <FadeUp delay={0.2}>
-          <div className="my-8 flex items-center justify-center gap-4">
+          <div className="my-4 md:my-8 flex items-center justify-center gap-4">
             <div
               className="h-px w-14"
               style={{
@@ -107,62 +107,62 @@ export default function GuestGuide() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 md:gap-y-8 mt-2 md:mt-0">
           <GuideItem
-            icon={<CalendarCheck2 size={34} />}
+            icon={<CalendarCheck2 size={26} className="md:w-[34px] md:h-[34px]" />}
             text="CONFIRME PRESENÇA"
           />
 
           <GuideItem
-            icon={<Clock3 size={34} />}
+            icon={<Clock3 size={26} className="md:w-[34px] md:h-[34px]" />}
             text="SEJA PONTUAL"
           />
 
           <GuideItem
-            icon={<Mail size={34} />}
+            icon={<Mail size={26} className="md:w-[34px] md:h-[34px]" />}
             text="CONVIDADO NÃO CONVIDA"
           />
 
           <GuideItem
-            icon={<Camera size={34} />}
+            icon={<Camera size={26} className="md:w-[34px] md:h-[34px]" />}
             text="NÃO ATRAPALHE O FOTÓGRAFO"
           />
 
           <GuideItem
-            icon={<Shirt size={34} />}
+            icon={<Shirt size={26} className="md:w-[34px] md:h-[34px]" />}
             text="NÃO USE BRANCO"
           />
 
           <GuideItem
-            icon={<Martini size={34} />}
+            icon={<Martini size={26} className="md:w-[34px] md:h-[34px]" />}
             text="APROVEITE BASTANTE"
           />
 
           <GuideItem
-            icon={<Heart size={34} />}
+            icon={<Heart size={26} className="md:w-[34px] md:h-[34px]" />}
             text="NÃO SAIA SEM SE DESPEIDR DOS NOIVOS!"
           />
 
           <GuideItem
-            icon={<TriangleAlert size={34} />}
+            icon={<TriangleAlert size={26} className="md:w-[34px] md:h-[34px]" />}
             text="EVITE CONFUSÕES"
           />
 
           <GuideItem
-            icon={<MessageCircle size={34} />}
+            icon={<MessageCircle size={26} className="md:w-[34px] md:h-[34px]" />}
             text="EVITE COMENTÁRIOS NEGATIVOS"
           />
 
           <GuideItem
-            icon={<Flower2 size={34} />}
+            icon={<Flower2 size={26} className="md:w-[34px] md:h-[34px]" />}
             text="NÃO LEVE A DECORAÇÃO"
           />
 
           <GuideItem
-            icon={<CakeSlice size={34} />}
+            icon={<CakeSlice size={26} className="md:w-[34px] md:h-[34px]" />}
             text="NÃO ATAQUE A MESA DE DOCES"
           />
 
           <GuideItem
-            icon={<Images size={34} />}
+            icon={<Images size={26} className="md:w-[34px] md:h-[34px]" />}
             text="TIRE MUITAS FOTOS"
           />
         </div>
@@ -213,7 +213,7 @@ function GuideItem({
   return (
     <div className="flex flex-col items-center px-2 text-center">
       <div
-        className="mb-3"
+        className="mb-2"
         style={{
           color: "var(--color-primary-dark)",
         }}
