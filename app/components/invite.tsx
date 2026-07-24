@@ -5,6 +5,7 @@ import FinalSection from "./FinalSection";
 import CreatorPage from "./CreatorPage";
 
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 
 export default function Invitation() {
   const mapsUrl =
@@ -23,7 +24,7 @@ export default function Invitation() {
       "
     >
       <section
-        className="relative flex h-screen snap-start flex-col items-center overflow-hidden px-8 pt-24"
+        className="relative flex h-screen snap-start flex-col items-center overflow-hidden px-8 pt-19"
         style={{ background: "var(--background)" }}
       >
         {/* Fundo */}
@@ -56,7 +57,7 @@ export default function Invitation() {
           <FadeUp delay={0.25}>
             <h1 className="mt-8 text-center leading-none">
               <span
-                className="font-title text-[68px]"
+                className="font-title text-5xl sm:text-[68px]"
                 style={{
                   color: "var(--color-primary-dark)",
                 }}
@@ -76,7 +77,7 @@ export default function Invitation() {
               </div>
 
               <span
-                className="font-title text-[68px]"
+                className="font-title text-5xl sm:text-[68px]"
                 style={{
                   color: "var(--color-primary-dark)",
                 }}
@@ -187,9 +188,9 @@ export default function Invitation() {
             </p>
           </FadeUp>
           <FadeUp delay={1.5}>
-          
+
             <Image className="mt-5"
-             src="/lacre.png" alt="Lacre" width={100} height={100} />
+              src="/lacre.png" alt="Lacre" width={100} height={100} />
           </FadeUp>
 
         </div>
@@ -206,9 +207,7 @@ export default function Invitation() {
               Deslize
             </p>
 
-            <span className="mt-2 animate-bounce text-xl">
-              ↓
-            </span>
+            <ChevronDown className="mt-2 animate-bounce" size={20} />
           </div>
         </FadeUp>
       </section>

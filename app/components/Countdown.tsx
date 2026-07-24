@@ -44,7 +44,7 @@ export default function Countdown() {
   return (
     <div className="mb-14 flex flex-col items-center">
       <p
-        className="mb-5 text-xs uppercase tracking-[0.35em]"
+        className="mt-5 text-xs uppercase tracking-[0.35em]"
         style={{ color: "var(--color-gold)" }}
       >
         Faltam apenas

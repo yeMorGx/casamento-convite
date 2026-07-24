@@ -140,7 +140,6 @@ export default function Intro({
 
           <p
             className="
-            w-50
               text-[11px]
               uppercase
               tracking-[0.5em]

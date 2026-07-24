@@ -105,7 +105,7 @@ export default function GuestGuide() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-3 gap-y-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8">
           <GuideItem
             icon={<CalendarCheck2 size={34} />}
             text="CONFIRME PRESENÇA"
@@ -138,7 +138,7 @@ export default function GuestGuide() {
 
           <GuideItem
             icon={<Heart size={34} />}
-            text="DESPEÇA-SE DOS NOIVOS"
+            text="NÃO SAIA SEM SE DESPEIDR DOS NOIVOS!"
           />
 
           <GuideItem
@@ -197,22 +197,6 @@ export default function GuestGuide() {
           </div>
         </FadeUp>
 
-        <FadeUp delay={1}>
-          <div
-            className="absolute bottom-6 left-0 right-0 flex flex-col items-center"
-            style={{
-              color: "var(--text-secondary)",
-            }}
-          >
-            <p className="text-[10px] uppercase tracking-[0.3em]">
-              Deslize
-            </p>
-
-            <span className="mt-2 animate-bounce text-lg">
-              ↓
-            </span>
-          </div>
-        </FadeUp>
       </div>
     </section>
   );

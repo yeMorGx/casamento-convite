@@ -77,7 +77,7 @@ export default function GiftSection() {
             className="mb-6"
             size={30}
             strokeWidth={1.5}
-            style={{ color: "var(--color-primary-dark)" }}
+            style={{ color: "var(--color-gold)" }}
           />
         </FadeUp>
 
@@ -211,6 +211,8 @@ export default function GiftSection() {
               justify-center
               gap-3
               rounded-full
+              border
+              border-transparent
               px-6
               py-4
               text-white
