@@ -6,7 +6,6 @@ import Intro from "./components/intro";
 import Invitation from "./components/invite";
 import BackgroundMusic from "./components/music";
 import FallingFlowers from "./components/FallingFlowers";
-import GoldenParticles from "./components/GoldenParticles";
 
 export default function Home() {
   const [opened, setOpened] = useState(false);
@@ -109,7 +108,6 @@ export default function Home() {
               animate-invite
             "
           >
-            <GoldenParticles />
 
             <FallingFlowers />
 

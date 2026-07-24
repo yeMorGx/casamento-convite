@@ -42,7 +42,7 @@ export default function Countdown() {
   }, []);
 
   return (
-    <div className="mb-14 flex flex-col items-center">
+    <div className="mb-6 md:mb-14 flex flex-col items-center">
       <p
         className="mt-5 text-xs uppercase tracking-[0.35em]"
         style={{ color: "var(--color-gold)" }}
@@ -51,7 +51,7 @@ export default function Countdown() {
       </p>
 
       <div
-        className="flex items-end gap-4 rounded-3xl px-8 py-6 shadow-lg"
+        className="flex items-end gap-2 md:gap-4 rounded-3xl px-4 py-4 md:px-8 md:py-6 shadow-lg"
         style={{
           background: "var(--color-surface)",
           borderColor: "var(--color-border)",

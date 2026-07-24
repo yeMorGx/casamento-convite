@@ -59,7 +59,7 @@ export default function GiftSection() {
 
   return (
     <section
-      className="relative flex min-h-screen w-full snap-start items-center justify-center overflow-y-auto overflow-x-hidden px-8 py-20"
+      className="relative flex min-h-[100svh] w-full snap-start items-center justify-center overflow-y-auto overflow-x-hidden px-8 py-10 md:py-20"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -83,7 +83,7 @@ export default function GiftSection() {
 
         <FadeUp delay={0.35}>
           <h2
-            className="font-title text-5xl"
+            className="font-title text-4xl md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -94,7 +94,7 @@ export default function GiftSection() {
 
         <FadeUp delay={0.45}>
           <p
-            className="mt-8 leading-8"
+            className="mt-4 md:mt-8 leading-8"
             style={{
               color: "var(--text-primary)",
             }}
@@ -118,7 +118,7 @@ export default function GiftSection() {
           <button
             onClick={() => setShowGiftList(!showGiftList)}
             className="
-              mt-12
+              mt-6 md:mt-12
               flex
               w-full
               items-center

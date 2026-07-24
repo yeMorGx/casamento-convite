@@ -21,7 +21,7 @@ import FadeUp from "./FadeUp";
 export default function GuestGuide() {
   return (
     <section
-      className="relative flex h-screen snap-start items-center justify-center overflow-hidden px-5 py-8"
+      className="relative flex min-h-[100svh] snap-start items-center justify-center overflow-hidden px-5 py-6 md:py-8"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -35,7 +35,7 @@ export default function GuestGuide() {
 
       {/* Moldura */}
       <div
-        className="absolute inset-5 rounded-[26px] border-2"
+        className="absolute inset-3 md:inset-5 rounded-[26px] border-2"
         style={{
           borderColor: "var(--color-primary-dark)",
         }}
@@ -61,7 +61,7 @@ export default function GuestGuide() {
       <div className="relative z-10 w-full max-w-[340px]">
         <FadeUp delay={0.1}>
           <h2
-            className="text-center font-title text-5xl"
+            className="text-center font-title text-4xl md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -70,7 +70,7 @@ export default function GuestGuide() {
           </h2>
 
           <h3
-            className="mt-1 text-center font-title text-5xl"
+            className="mt-1 text-center font-title text-4xl md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -105,7 +105,7 @@ export default function GuestGuide() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 md:gap-y-8 mt-2 md:mt-0">
           <GuideItem
             icon={<CalendarCheck2 size={34} />}
             text="CONFIRME PRESENÇA"
@@ -168,9 +168,9 @@ export default function GuestGuide() {
         </div>
 
         <FadeUp delay={0.8}>
-          <div className="mt-10 flex items-center justify-center gap-4">
+          <div className="mt-8 md:mt-10 flex items-center justify-center gap-4">
             <span
-              className="font-title text-5xl"
+              className="font-title text-4xl md:text-5xl"
               style={{
                 color: "var(--color-primary-dark)",
               }}

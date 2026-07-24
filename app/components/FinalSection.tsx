@@ -7,7 +7,7 @@ import Countdown from "./Countdown";
 export default function FinalSection() {
   return (
     <section
-      className="relative flex h-screen snap-start items-center justify-center overflow-hidden px-8"
+      className="relative flex min-h-[100svh] w-full snap-start items-center justify-center overflow-hidden px-8 py-10 md:py-20"
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -80,7 +80,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.7}>
           <div
-            className="mx-auto my-10 h-px w-24"
+            className="mx-auto my-5 md:my-10 h-px w-24"
             style={{
               background: "rgba(207,167,93,.35)",
             }}
@@ -89,7 +89,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.9}>
           <p
-            className="font-title text-5xl"
+            className="font-title text-4xl md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -98,7 +98,7 @@ export default function FinalSection() {
           </p>
 
           <p
-            className="mt-5 text-sm uppercase tracking-[0.25em]"
+            className="mt-3 md:mt-5 text-xs md:text-sm uppercase tracking-[0.25em]"
             style={{
               color: "var(--text-secondary)",
             }}

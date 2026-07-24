@@ -56,7 +56,7 @@ export default function Intro({
     >
       <video
         ref={cellVideoRef}
-        src="/video/cellvideo.mp4"
+        src="/video/cellvideo2.mp4#t=0.001"
         className="
           absolute
           inset-0
@@ -73,7 +73,7 @@ export default function Intro({
 
       <video
         ref={deskVideoRef}
-        src="/video/deskvideo.mp4"
+        src="/video/deskvideo.mp4#t=0.001"
         className="
           absolute
           inset-0
@@ -140,6 +140,7 @@ export default function Intro({
 
           <p
             className="
+              w-50
               text-[11px]
               uppercase
               tracking-[0.5em]
