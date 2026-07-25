@@ -97,9 +97,18 @@ export default function Home() {
 
         {!opened ? (
           <Intro
-            onStart={startMusic}
-            onFinish={finishIntro}
-          />
+  onStart={startMusic}
+  onTransitionStart={() => {
+    setTransitioning(true);
+  }}
+  onFinish={() => {
+    setOpened(true);
+
+    setTimeout(() => {
+      setTransitioning(false);
+    }, 1000);
+  }}
+/>
         ) : (
           <div
             className="
