@@ -30,7 +30,7 @@ export default function Home() {
 
       audio.volume = progress * targetVolume;
 
-      if (progress < 1) {
+      if (progress < 0.4) {
         requestAnimationFrame(animate);
       }
     };
