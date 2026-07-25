@@ -29,10 +29,9 @@ export default function Invitation() {
 
   const mainSection = (
     <section
-      className="relative flex h-full flex-col items-center overflow-hidden px-8 pt-16 pb-24"
+      className="relative flex min-h-[100svh] flex-col items-center overflow-x-hidden overflow-y-auto px-6 pt-10 pb-28 md:px-8 md:pt-16 md:pb-24"
       style={{ background: "var(--background)" }}
     >
-
       {/* Fundo */}
       <div
         className="absolute inset-0"
@@ -58,12 +57,11 @@ export default function Invitation() {
       />
 
       {/* Conteúdo */}
-      <div className="relative z-10 flex flex-1 flex-col items-center">
-
+      <div className="relative z-10 flex w-full flex-1 flex-col items-center justify-center">
         <FadeUp delay={0.25}>
-          <h1 className="mt-2 md:mt-8 text-center leading-tight">
+          <h1 className="mt-2 text-center leading-tight md:mt-8">
             <span
-              className="font-title text-5xl sm:text-[68px]"
+              className="font-title text-4xl sm:text-5xl md:text-[68px]"
               style={{
                 color: "var(--color-primary-dark)",
               }}
@@ -83,7 +81,7 @@ export default function Invitation() {
             </div>
 
             <span
-              className="font-title text-5xl sm:text-[68px]"
+              className="font-title text-4xl sm:text-5xl md:text-[68px]"
               style={{
                 color: "var(--color-primary-dark)",
               }}
@@ -95,7 +93,7 @@ export default function Invitation() {
 
         <FadeUp delay={0.4}>
           <div
-            className="my-2 md:my-4 h-px w-24"
+            className="my-2 h-px w-24 md:my-4"
             style={{
               background: "rgba(207,167,93,.35)",
             }}
@@ -105,7 +103,7 @@ export default function Invitation() {
         <FadeUp delay={0.55}>
           <div className="text-center">
             <p
-              className="font-body text-2xl md:text-3xl"
+              className="font-body text-xl md:text-3xl"
               style={{
                 color: "var(--text-primary)",
               }}
@@ -114,7 +112,7 @@ export default function Invitation() {
             </p>
 
             <p
-              className="mt-2 text-xs uppercase tracking-[0.35em]"
+              className="mt-2 text-[10px] uppercase tracking-[0.32em] md:text-xs md:tracking-[0.35em]"
               style={{
                 color: "var(--text-secondary)",
               }}
@@ -125,9 +123,9 @@ export default function Invitation() {
         </FadeUp>
 
         <FadeUp delay={0.7}>
-          <div className="mt-3 md:mt-12 text-center">
+          <div className="mt-4 text-center md:mt-12">
             <h2
-              className="mb-1 md:mb-4 font-body text-xl md:text-3xl italic"
+              className="mb-1 font-body text-lg italic md:mb-4 md:text-3xl"
               style={{
                 color: "var(--color-primary-dark)",
               }}
@@ -136,7 +134,7 @@ export default function Invitation() {
             </h2>
 
             <p
-              className="max-w-xs text-sm leading-7"
+              className="max-w-xs text-sm leading-7 md:text-base"
               style={{
                 color: "var(--text-primary)",
               }}
@@ -154,14 +152,13 @@ export default function Invitation() {
           <button
             onClick={() => window.open(mapsUrl, "_blank")}
             className="
-              mt-4
-              md:mt-10
+              mt-5
               rounded-full
               border
               bg-white/50
-              px-8
+              px-7
               py-3
-              text-sm
+              text-xs
               uppercase
               tracking-[0.2em]
               shadow-sm
@@ -169,6 +166,10 @@ export default function Invitation() {
               transition-all
               duration-300
               hover:scale-105
+              md:mt-10
+              md:px-8
+              md:py-3
+              md:text-sm
             "
             style={{
               borderColor: "var(--color-primary-dark)",
@@ -188,14 +189,17 @@ export default function Invitation() {
         </FadeUp>
 
         <FadeUp delay={1}>
-          <p className="text-center text-sm mt-2" style={{ color: "var(--text-secondary)" }}>
+          <p
+            className="mt-3 text-center text-sm md:mt-2"
+            style={{ color: "var(--text-secondary)" }}
+          >
             <span className="font-body">Contamos com a sua presença!</span>
           </p>
         </FadeUp>
 
         <FadeUp delay={1.5}>
           <Image
-            className="mt-2 md:mt-5 w-14 h-14 md:w-[100px] md:h-[100px]"
+            className="mt-3 h-14 w-14 md:mt-5 md:h-[100px] md:w-[100px]"
             src="/lacre.png"
             alt="Lacre"
             width={100}
@@ -216,30 +220,38 @@ export default function Invitation() {
 
   return (
     <main
-      className="relative h-[100svh] w-full overflow-hidden"
+      className="relative min-h-[100svh] w-full overflow-x-hidden overflow-y-auto"
       style={{ background: "var(--background)" }}
     >
-      {/* Section content with fade transition */}
       <div
-        className="h-full w-full transition-opacity duration-300"
+        className="min-h-[100svh] w-full transition-opacity duration-300"
         style={{ opacity: visible ? 1 : 0 }}
       >
         {sections[current]}
       </div>
 
-      {/* Back button */}
       {current > 0 && (
         <button
           onClick={() => navigate(current - 1)}
           className="
-            fixed top-5 left-4 z-50
-            flex items-center gap-1.5
+            fixed
+            left-4
+            top-5
+            z-50
+            flex
+            items-center
+            gap-1.5
             rounded-full
-            px-4 py-2
-            text-xs uppercase tracking-[0.2em]
+            px-4
+            py-2
+            text-xs
+            uppercase
+            tracking-[0.2em]
             backdrop-blur-sm
-            transition-all duration-200
-            hover:scale-105 active:scale-95
+            transition-all
+            duration-200
+            hover:scale-105
+            active:scale-95
           "
           style={{
             background: "rgba(255,255,255,0.55)",
@@ -252,21 +264,30 @@ export default function Invitation() {
         </button>
       )}
 
-      {/* Next button — not shown on last section (CreatorPage) */}
       {current < TOTAL_SECTIONS - 1 && (
         <button
           onClick={() => navigate(current + 1)}
           className="
-            fixed bottom-8 left-1/2 z-50
+            fixed
+            bottom-8
+            left-1/2
+            z-50
+            flex
             -translate-x-1/2
-            flex items-center gap-2
+            items-center
+            gap-2
             rounded-full
-            px-8 py-3.5
-            text-sm uppercase tracking-[0.2em]
+            px-8
+            py-3.5
+            text-sm
+            uppercase
+            tracking-[0.2em]
             text-white
             shadow-lg
-            transition-all duration-200
-            hover:scale-105 active:scale-95
+            transition-all
+            duration-200
+            hover:scale-105
+            active:scale-95
           "
           style={{
             background: "var(--color-primary-dark)",
@@ -277,8 +298,7 @@ export default function Invitation() {
         </button>
       )}
 
-      {/* Progress dots */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1.5">
+      <div className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 gap-1.5">
         {Array.from({ length: TOTAL_SECTIONS }).map((_, i) => (
           <button
             key={i}

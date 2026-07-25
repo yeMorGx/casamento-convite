@@ -7,7 +7,21 @@ import Countdown from "./Countdown";
 export default function FinalSection() {
   return (
     <section
-      className="relative flex h-full w-full snap-start items-center justify-center overflow-y-auto px-8 py-10 md:py-20"
+      className="
+        relative
+        flex
+        min-h-[100svh]
+        w-full
+        snap-start
+        items-center
+        justify-center
+        overflow-x-hidden
+        overflow-y-auto
+        px-6
+        py-12
+        md:px-8
+        md:py-20
+      "
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -21,7 +35,7 @@ export default function FinalSection() {
 
       {/* Glow */}
       <div
-        className="absolute -top-24 -left-24 h-72 w-72 rounded-full blur-3xl"
+        className="absolute -left-24 -top-24 h-72 w-72 rounded-full blur-3xl"
         style={{
           background: "rgba(239,201,210,.18)",
         }}
@@ -49,7 +63,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.3}>
           <h2
-            className="mt-8 font-title text-5xl"
+            className="mt-6 font-title text-4xl md:mt-8 md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -60,7 +74,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.5}>
           <p
-            className="mt-8 leading-8"
+            className="mt-5 leading-7 md:mt-8 md:leading-8"
             style={{
               color: "var(--text-primary)",
             }}
@@ -69,7 +83,7 @@ export default function FinalSection() {
           </p>
 
           <p
-            className="mt-4 leading-8"
+            className="mt-3 leading-7 md:mt-4 md:leading-8"
             style={{
               color: "var(--text-primary)",
             }}
@@ -80,7 +94,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.7}>
           <div
-            className="mx-auto my-5 md:my-10 h-px w-24"
+            className="mx-auto my-5 h-px w-24 md:my-10"
             style={{
               background: "rgba(207,167,93,.35)",
             }}
@@ -89,7 +103,7 @@ export default function FinalSection() {
 
         <FadeUp delay={0.9}>
           <p
-            className="font-title text-4xl md:text-5xl"
+            className="font-title text-3xl md:text-5xl"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -98,7 +112,7 @@ export default function FinalSection() {
           </p>
 
           <p
-            className="mt-3 md:mt-5 text-xs md:text-sm uppercase tracking-[0.25em]"
+            className="mt-3 text-xs uppercase tracking-[0.25em] md:mt-5 md:text-sm"
             style={{
               color: "var(--text-secondary)",
             }}
@@ -113,7 +127,7 @@ export default function FinalSection() {
 
         <FadeUp delay={1.1}>
           <p
-            className="mt-12 text-lg italic"
+            className="mt-8 text-base italic md:mt-12 md:text-lg"
             style={{
               color: "var(--color-gold)",
             }}

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import type { ReactNode } from "react";
 import {
   CalendarCheck2,
   Clock3,
@@ -21,7 +22,20 @@ import FadeUp from "./FadeUp";
 export default function GuestGuide() {
   return (
     <section
-      className="relative flex h-full snap-start items-start justify-center overflow-y-auto px-5 py-6 md:py-8"
+      className="
+        relative
+        flex
+        min-h-[100svh]
+        w-full
+        snap-start
+        items-start
+        justify-center
+        overflow-x-hidden
+        overflow-y-auto
+        px-5
+        py-6
+        md:py-8
+      "
       style={{ background: "var(--background)" }}
     >
       {/* Fundo */}
@@ -35,7 +49,7 @@ export default function GuestGuide() {
 
       {/* Moldura */}
       <div
-        className="absolute inset-3 md:inset-5 rounded-[26px] border-2"
+        className="absolute inset-3 rounded-[26px] border-2 md:inset-5"
         style={{
           borderColor: "var(--color-primary-dark)",
         }}
@@ -47,7 +61,7 @@ export default function GuestGuide() {
         alt=""
         width={120}
         height={120}
-        className="absolute left-0 top-0 rotate-85"
+        className="absolute left-0 top-0 rotate-[85deg]"
       />
 
       <Image
@@ -55,13 +69,13 @@ export default function GuestGuide() {
         alt=""
         width={120}
         height={120}
-        className="absolute bottom-0 right-0 rotate-265"
+        className="absolute bottom-0 right-0 rotate-[265deg]"
       />
 
       <div className="relative z-10 w-full max-w-[340px]">
         <FadeUp delay={0.1}>
           <h2
-            className="text-center font-title text-4xl md:text-5xl"
+            className="text-center font-title text-4xl md:text-5xl mt-15"
             style={{
               color: "var(--color-primary-dark)",
             }}
@@ -80,7 +94,7 @@ export default function GuestGuide() {
         </FadeUp>
 
         <FadeUp delay={0.2}>
-          <div className="my-4 md:my-8 flex items-center justify-center gap-4">
+          <div className="my-4 flex items-center justify-center gap-4 md:my-8">
             <div
               className="h-px w-14"
               style={{
@@ -105,70 +119,70 @@ export default function GuestGuide() {
           </div>
         </FadeUp>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 md:gap-y-8 mt-2 md:mt-0">
+        <div className="mt-2 grid grid-cols-2 gap-x-2 gap-y-4 md:mt-0 md:grid-cols-3 md:gap-y-8">
           <GuideItem
-            icon={<CalendarCheck2 size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<CalendarCheck2 size={26} className="md:h-[34px] md:w-[34px]" />}
             text="CONFIRME PRESENÇA"
           />
 
           <GuideItem
-            icon={<Clock3 size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Clock3 size={26} className="md:h-[34px] md:w-[34px]" />}
             text="SEJA PONTUAL"
           />
 
           <GuideItem
-            icon={<Mail size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Mail size={26} className="md:h-[34px] md:w-[34px]" />}
             text="CONVIDADO NÃO CONVIDA"
           />
 
           <GuideItem
-            icon={<Camera size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Camera size={26} className="md:h-[34px] md:w-[34px]" />}
             text="NÃO ATRAPALHE O FOTÓGRAFO"
           />
 
           <GuideItem
-            icon={<Shirt size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Shirt size={26} className="md:h-[34px] md:w-[34px]" />}
             text="NÃO USE BRANCO"
           />
 
           <GuideItem
-            icon={<Martini size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Martini size={26} className="md:h-[34px] md:w-[34px]" />}
             text="APROVEITE BASTANTE"
           />
 
           <GuideItem
-            icon={<Heart size={26} className="md:w-[34px] md:h-[34px]" />}
-            text="NÃO SAIA SEM SE DESPEIDR DOS NOIVOS!"
+            icon={<Heart size={26} className="md:h-[34px] md:w-[34px]" />}
+            text="NÃO SAIA SEM SE DESPEDIR DOS NOIVOS!"
           />
 
           <GuideItem
-            icon={<TriangleAlert size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<TriangleAlert size={26} className="md:h-[34px] md:w-[34px]" />}
             text="EVITE CONFUSÕES"
           />
 
           <GuideItem
-            icon={<MessageCircle size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<MessageCircle size={26} className="md:h-[34px] md:w-[34px]" />}
             text="EVITE COMENTÁRIOS NEGATIVOS"
           />
 
           <GuideItem
-            icon={<Flower2 size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Flower2 size={26} className="md:h-[34px] md:w-[34px]" />}
             text="NÃO LEVE A DECORAÇÃO"
           />
 
           <GuideItem
-            icon={<CakeSlice size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<CakeSlice size={26} className="md:h-[34px] md:w-[34px]" />}
             text="NÃO ATAQUE A MESA DE DOCES"
           />
 
           <GuideItem
-            icon={<Images size={26} className="md:w-[34px] md:h-[34px]" />}
+            icon={<Images size={26} className="md:h-[34px] md:w-[34px]" />}
             text="TIRE MUITAS FOTOS"
           />
         </div>
 
         <FadeUp delay={0.8}>
-          <div className="mt-8 md:mt-10 flex items-center justify-center gap-4">
+          <div className="mt-8 flex items-center justify-center gap-4 md:mt-10">
             <span
               className="font-title text-4xl md:text-5xl"
               style={{
@@ -196,20 +210,17 @@ export default function GuestGuide() {
             </span>
           </div>
         </FadeUp>
-
       </div>
     </section>
   );
 }
+
 interface GuideItemProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   text: string;
 }
 
-function GuideItem({
-  icon,
-  text,
-}: GuideItemProps) {
+function GuideItem({ icon, text }: GuideItemProps) {
   return (
     <div className="flex flex-col items-center px-2 text-center">
       <div
