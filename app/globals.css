@@ -1,41 +1,115 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fcf7f8;
+  /* ===========================
+     FUNDO
+  =========================== */
+  --background: #fffaf9;
 
-  --color-primary: #efc9d2;
-  --color-primary-light: #f8e6eb;
-  --color-primary-dark: #d89cab;
+  /* ===========================
+     ROSA
+  =========================== */
+  --color-primary: #f0b7c5;
+  --color-primary-light: #fdecef;
+  --color-primary-dark: #cf738d;
 
-  --color-gold: #dbaa3f;
-  --color-gold-light: #dfc48d;
+  /* ===========================
+     DOURADO
+  =========================== */
+  --color-gold: #c99419;
+  --color-gold-light: #e8c66b;
+  --color-gold-dark: #9d7210;
 
-  --color-green: #7e9775;
-  --color-green-light: #9db394;
+  /* ===========================
+     VERDE
+  =========================== */
+  --color-green: #4d7651;
+  --color-green-light: #7fa283;
+  --color-green-dark: #335238;
 
-  --text-primary: #8d5f69;
-  --text-secondary: #b08691;
+  /* ===========================
+     TEXTO (Maior contraste)
+  =========================== */
+  --text-primary: #030203;
+  --text-secondary: #5f4b50;
+  --text-light: #ffffff;
 
-  --color-border: #efd8df;
+  /* ===========================
+     SUPERFÍCIES
+  =========================== */
+  --color-surface: #ffffff;
+  --color-border: #e8d6db;
+
+  /* ===========================
+     SOMBRAS
+  =========================== */
+  --shadow-soft: rgba(0, 0, 0, 0.08);
 }
 
-/* Fontes */
+/* ===========================
+   FONTES
+=========================== */
+
 .font-title {
   font-family: var(--font-great-vibes);
+  color: var(--text-primary);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .08);
 }
 
 .font-body {
   font-family: var(--font-cormorant);
 }
 
-/* Body */
-body {
-  background: var(--background);
-  color: var(--text-primary);
-  font-family: var(--font-cormorant);
+/* ===========================
+   BODY
+=========================== */
+
+html {
+  scroll-behavior: smooth;
 }
 
-/* Scrollbar */
+body {
+  background: linear-gradient(
+    180deg,
+    #fffdfd 0%,
+    #fff8f8 45%,
+    #fffaf7 100%
+  );
+
+  color: var(--text-primary);
+  font-family: var(--font-cormorant);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===========================
+   TIPOGRAFIA
+=========================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+p,
+span,
+li,
+label {
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -45,52 +119,185 @@ body {
   scrollbar-width: none;
 }
 
-/* Seleção de texto */
+/* ===========================
+   SELEÇÃO
+=========================== */
+
 ::selection {
   background: var(--color-primary);
-  color: var(--text-primary);
+  color: white;
 }
 
-/* Botões */
+/* ===========================
+   BOTÃO PRINCIPAL
+=========================== */
+
 .btn-primary {
-  background: var(--color-gold);
-  color: var(--text-light);
-  transition: 0.3s ease;
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-light),
+    var(--color-gold)
+  );
+
+  color: white;
+
+  border: none;
+  border-radius: 999px;
+
+  transition: all .3s ease;
+
+  box-shadow:
+    0 8px 25px rgba(201,148,25,.25),
+    0 2px 8px rgba(0,0,0,.08);
 }
 
 .btn-primary:hover {
-  background: var(--color-gold-dark);
+  background: linear-gradient(
+    135deg,
+    var(--color-gold),
+    var(--color-gold-dark)
+  );
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 35px rgba(201,148,25,.35),
+    0 6px 18px rgba(0,0,0,.12);
 }
 
+/* ===========================
+   BOTÃO SECUNDÁRIO
+=========================== */
+
 .btn-secondary {
-  background: var(--color-primary);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light),
+    var(--color-primary)
+  );
+
   color: var(--text-primary);
-  transition: 0.3s ease;
+
+  border: none;
+  border-radius: 999px;
+
+  transition: all .3s ease;
+
+  box-shadow:
+    0 8px 22px rgba(240,183,197,.20);
 }
 
 .btn-secondary:hover {
-  background: var(--color-primary-dark);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 30px rgba(207,115,141,.28);
 }
 
-/* Cards */
+/* ===========================
+   CARDS
+=========================== */
+
 .card {
-  background: var(--color-surface);
+  background: rgba(255,255,255,.95);
+
   border: 1px solid var(--color-border);
-  box-shadow: 0 8px 30px var(--shadow-soft);
-  border-radius: 1rem;
+
+  border-radius: 24px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.05),
+    0 2px 10px rgba(201,148,25,.08);
+
+  transition: all .3s ease;
 }
 
-/* Links */
+.card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.08),
+    0 8px 22px rgba(201,148,25,.12);
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+input,
+textarea,
+select {
+  width: 100%;
+
+  background: white;
+
+  color: var(--text-primary);
+
+  border: 1px solid var(--color-border);
+
+  border-radius: 14px;
+
+  padding: .85rem 1rem;
+
+  transition: .25s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8d7a7e;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+
+  border-color: var(--color-primary-dark);
+
+  box-shadow:
+    0 0 0 4px rgba(240,183,197,.18);
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
 a {
-  color: var(--color-green);
-  transition: color .25s ease;
+  color: var(--color-green-dark);
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: all .25s ease;
 }
 
 a:hover {
-  color: var(--color-green-dark);
+  color: var(--color-gold-dark);
 }
 
-/* Animação do convite */
+/* ===========================
+   DIVISORES
+=========================== */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+}
+
+/* ===========================
+   ANIMAÇÃO DO CONVITE
+=========================== */
+
 @keyframes inviteIn {
   from {
     opacity: 0;
@@ -107,4 +314,64 @@ a:hover {
 
 .animate-invite {
   animation: inviteIn 1s ease forwards;
+}
+
+/* ===========================
+   FADE UP
+=========================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp .8s ease forwards;
+}
+
+/* ===========================
+   GLOW DOURADO
+=========================== */
+
+.gold-glow {
+  box-shadow:
+    0 0 20px rgba(201,148,25,.18),
+    0 0 40px rgba(201,148,25,.08);
+}
+
+/* ===========================
+   GLOW ROSA
+=========================== */
+
+.pink-glow {
+  box-shadow:
+    0 0 20px rgba(240,183,197,.25);
+}
+
+/* ===========================
+   IMAGENS
+=========================== */
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ===========================
+   TRANSIÇÕES GLOBAIS
+=========================== */
+
+* {
+  transition:
+    color .25s ease,
+    background-color .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
 }
