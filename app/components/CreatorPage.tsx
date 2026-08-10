@@ -169,7 +169,7 @@ export default function CreatorPage() {
                 <FadeUp delay={1.3}>
           <button
             onClick={() =>
-              window.open("https://gabrielmorgado.dev", "_blank")
+              window.open("https://pessoalportfolio.vercel.app", "_blank")
             }
             className="
               mt-10
