@@ -46,6 +46,32 @@ for (const entry of readdirSync(openNextDir)) {
 cpSync(join(openNextDir, "worker.js"), join(serverDir, "index.js"));
 cpSync(join(openNextDir, "assets"), assetsDir, { recursive: true });
 
+const workerEntryPath = join(serverDir, "index.js");
+const workerEntry = readFileSync(workerEntryPath, "utf8");
+const workerRuntimePrelude = `
+const __sitesPath = {
+  join: (...parts) => parts.filter(Boolean).join("/").replace(/\\\\/g, "/").replace(/\\/{2,}/g, "/"),
+  dirname: (value) => value.replace(/\\\\/g, "/").split("/").slice(0, -1).join("/") || ".",
+};
+const __sitesFs = {
+  appendFileSync() {},
+  existsSync() { return false; },
+  mkdirSync() {},
+  writeFileSync() {},
+};
+globalThis.require ??= (moduleName) => {
+  if (moduleName === "path" || moduleName === "node:path") return __sitesPath;
+  if (moduleName === "fs" || moduleName === "node:fs") return __sitesFs;
+  if (moduleName === "async_hooks" || moduleName === "node:async_hooks") {
+    return { AsyncLocalStorage: globalThis.AsyncLocalStorage };
+  }
+  return {};
+};
+`;
+if (!workerEntry.includes("const __sitesPath")) {
+  writeFileSync(workerEntryPath, `${workerRuntimePrelude}\n${workerEntry}`, "utf8");
+}
+
 // Next's bundled Node environment checks globalThis.AsyncLocalStorage before
 // falling back to a CommonJS require. Workers expose the module import but do
 // not always populate that global, so make the supported implementation
