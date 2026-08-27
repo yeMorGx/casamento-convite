@@ -24,7 +24,7 @@ function run(command, args) {
 // enabled. In that nested invocation we only run Next, then the outer build
 // assembles the Cloudflare worker and the Sites-compatible dist/ directory.
 if (process.env.NEXT_PRIVATE_STANDALONE === "true") {
-  run("next", ["build"]);
+  run("next", ["build", "--webpack"]);
   process.exit(0);
 }
 
