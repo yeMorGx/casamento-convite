@@ -88,6 +88,16 @@ async function claimGiftInD1(db: D1Database, claim: GiftClaim) {
   return (result.meta?.changes ?? 0) > 0;
 }
 
+async function removeGiftClaimFromD1(db: D1Database, giftId: string) {
+  await ensureD1Schema(db);
+  const result = await db
+    .prepare("DELETE FROM gift_claims WHERE gift_id = ?")
+    .bind(giftId)
+    .run();
+
+  return (result.meta?.changes ?? 0) > 0;
+}
+
 async function readClaimsFile(): Promise<GiftClaims> {
   try {
     const contents = await readFile(claimsFile, "utf8");
@@ -134,6 +144,29 @@ async function claimGiftLocally(claim: GiftClaim) {
   return created;
 }
 
+async function removeGiftClaimLocally(giftId: string) {
+  let removed = false;
+
+  const operation = (sharedState.giftClaimWriteQueue ?? Promise.resolve()).then(
+    async () => {
+      const claims = await readClaimsFile();
+
+      if (!claims[giftId]) {
+        return;
+      }
+
+      delete claims[giftId];
+      await writeClaimsFile(claims);
+      removed = true;
+    },
+  );
+
+  sharedState.giftClaimWriteQueue = operation.catch(() => undefined);
+  await operation;
+
+  return removed;
+}
+
 export async function getGiftClaims() {
   const db = await getD1Database();
 
@@ -160,4 +193,18 @@ export async function claimGift(claim: GiftClaim) {
   }
 
   return claimGiftLocally(claim);
+}
+
+export async function removeGiftClaim(giftId: string) {
+  const db = await getD1Database();
+
+  if (db) {
+    return removeGiftClaimFromD1(db, giftId);
+  }
+
+  if (isProduction) {
+    throw new Error("D1 binding DB is not configured.");
+  }
+
+  return removeGiftClaimLocally(giftId);
 }

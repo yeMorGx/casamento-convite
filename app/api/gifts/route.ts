@@ -1,5 +1,10 @@
 import { giftIds } from "@/lib/gifts";
-import { claimGift, getGiftClaims, type GiftClaim } from "@/lib/gift-store";
+import {
+  claimGift,
+  getGiftClaims,
+  removeGiftClaim,
+  type GiftClaim,
+} from "@/lib/gift-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -81,6 +86,88 @@ export async function POST(request: Request) {
   } catch {
     return Response.json(
       { message: "Não foi possível marcar o presente. Tente novamente." },
+      { status: 500, headers: noStoreHeaders },
+    );
+  }
+}
+
+async function passwordsMatch(value: string, expected: string) {
+  const encoder = new TextEncoder();
+  const [valueHash, expectedHash] = await Promise.all([
+    crypto.subtle.digest("SHA-256", encoder.encode(value)),
+    crypto.subtle.digest("SHA-256", encoder.encode(expected)),
+  ]);
+  const valueBytes = new Uint8Array(valueHash);
+  const expectedBytes = new Uint8Array(expectedHash);
+  let difference = 0;
+
+  for (let index = 0; index < valueBytes.length; index += 1) {
+    difference |= valueBytes[index] ^ expectedBytes[index];
+  }
+
+  return difference === 0;
+}
+
+export async function DELETE(request: Request) {
+  let payload: unknown;
+
+  try {
+    payload = await request.json();
+  } catch {
+    return Response.json(
+      { message: "Os dados enviados são inválidos." },
+      { status: 400, headers: noStoreHeaders },
+    );
+  }
+
+  if (!payload || typeof payload !== "object") {
+    return Response.json(
+      { message: "Os dados enviados são inválidos." },
+      { status: 400, headers: noStoreHeaders },
+    );
+  }
+
+  const body = payload as Record<string, unknown>;
+  const giftId = typeof body.giftId === "string" ? body.giftId : "";
+  const password = typeof body.password === "string" ? body.password : "";
+
+  if (!giftIds.has(giftId)) {
+    return Response.json(
+      { message: "Esse presente não existe na lista." },
+      { status: 400, headers: noStoreHeaders },
+    );
+  }
+
+  const adminPassword = process.env.GIFT_ADMIN_PASSWORD;
+
+  if (!adminPassword) {
+    return Response.json(
+      { message: "A remoção ainda não está configurada." },
+      { status: 503, headers: noStoreHeaders },
+    );
+  }
+
+  if (!(await passwordsMatch(password, adminPassword))) {
+    return Response.json(
+      { message: "Senha incorreta." },
+      { status: 401, headers: noStoreHeaders },
+    );
+  }
+
+  try {
+    const removed = await removeGiftClaim(giftId);
+
+    if (!removed) {
+      return Response.json(
+        { message: "Este presente já está disponível." },
+        { status: 404, headers: noStoreHeaders },
+      );
+    }
+
+    return Response.json({ giftId }, { headers: noStoreHeaders });
+  } catch {
+    return Response.json(
+      { message: "Não foi possível remover a marcação. Tente novamente." },
       { status: 500, headers: noStoreHeaders },
     );
   }

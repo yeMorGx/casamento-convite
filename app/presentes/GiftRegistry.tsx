@@ -9,6 +9,8 @@ import {
   Gift,
   Heart,
   LoaderCircle,
+  LockKeyhole,
+  Trash2,
   X,
 } from "lucide-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -23,13 +25,17 @@ type ApiError = {
 export default function GiftRegistry() {
   const [claims, setClaims] = useState<GiftClaims>({});
   const [selectedGift, setSelectedGift] = useState<GiftItem | null>(null);
+  const [giftToRemove, setGiftToRemove] = useState<GiftItem | null>(null);
   const [buyerName, setBuyerName] = useState("");
   const [anonymous, setAnonymous] = useState(false);
+  const [removalPassword, setRemovalPassword] = useState("");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [removing, setRemoving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const nameInputRef = useRef<HTMLInputElement>(null);
+  const removalPasswordRef = useRef<HTMLInputElement>(null);
 
   const loadClaims = useCallback(async () => {
     try {
@@ -63,24 +69,28 @@ export default function GiftRegistry() {
   }, [loadClaims]);
 
   useEffect(() => {
-    if (!selectedGift) return;
+    if (!selectedGift && !giftToRemove) return;
 
     document.body.style.overflow = "hidden";
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && !submitting) {
+      if (event.key === "Escape" && !submitting && !removing) {
         setSelectedGift(null);
+        setGiftToRemove(null);
         setError("");
       }
     };
 
     window.addEventListener("keydown", closeOnEscape);
-    window.setTimeout(() => nameInputRef.current?.focus(), 50);
+    window.setTimeout(() => {
+      if (selectedGift) nameInputRef.current?.focus();
+      if (giftToRemove) removalPasswordRef.current?.focus();
+    }, 50);
 
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", closeOnEscape);
     };
-  }, [selectedGift, submitting]);
+  }, [giftToRemove, removing, selectedGift, submitting]);
 
   function openConfirmation(gift: GiftItem) {
     setSelectedGift(gift);
@@ -92,6 +102,19 @@ export default function GiftRegistry() {
   function closeModal() {
     if (submitting) return;
     setSelectedGift(null);
+    setError("");
+  }
+
+  function openRemoval(gift: GiftItem) {
+    setGiftToRemove(gift);
+    setRemovalPassword("");
+    setError("");
+  }
+
+  function closeRemovalModal() {
+    if (removing) return;
+    setGiftToRemove(null);
+    setRemovalPassword("");
     setError("");
   }
 
@@ -132,6 +155,46 @@ export default function GiftRegistry() {
       setError("Não foi possível marcar o presente. Verifique sua conexão.");
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  async function confirmRemoval(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!giftToRemove || removing) return;
+
+    setRemoving(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/gifts", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          giftId: giftToRemove.id,
+          password: removalPassword,
+        }),
+      });
+      const data = (await response.json()) as ApiError & { giftId?: string };
+
+      if (!response.ok || !data.giftId) {
+        setError(data.message ?? "Não foi possível remover a marcação.");
+        if (response.status === 404) void loadClaims();
+        return;
+      }
+
+      setClaims((current) => {
+        const updated = { ...current };
+        delete updated[data.giftId!];
+        return updated;
+      });
+      setGiftToRemove(null);
+      setRemovalPassword("");
+      setNotice("Marcação removida. O presente está disponível novamente.");
+      window.setTimeout(() => setNotice(""), 5000);
+    } catch {
+      setError("Não foi possível remover a marcação. Verifique sua conexão.");
+    } finally {
+      setRemoving(false);
     }
   }
 
@@ -291,6 +354,22 @@ export default function GiftRegistry() {
                           {loading ? "Verificando..." : claim ? "Já comprado" : "Já comprei"}
                         </button>
                       </div>
+
+                      {claim && (
+                        <button
+                          type="button"
+                          onClick={() => openRemoval(gift)}
+                          className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold"
+                          style={{
+                            borderColor: "rgba(159,48,48,.32)",
+                            color: "#8f3030",
+                            background: "rgba(255,255,255,.72)",
+                          }}
+                        >
+                          <Trash2 size={16} />
+                          Remover marcação
+                        </button>
+                      )}
                     </article>
                   );
                 })}
@@ -449,6 +528,110 @@ export default function GiftRegistry() {
                   <Check size={19} />
                 )}
                 {submitting ? "Marcando..." : "Confirmar que comprei"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {giftToRemove && (
+        <div
+          className="fixed inset-0 z-[80] flex items-end justify-center bg-black/40 p-0 backdrop-blur-sm sm:items-center sm:p-5"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeRemovalModal();
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="removal-title"
+            className="w-full max-w-lg rounded-t-[28px] bg-white p-6 shadow-2xl sm:rounded-[28px] sm:p-8"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p
+                  className="text-xs font-semibold uppercase tracking-[0.24em]"
+                  style={{ color: "#8f3030" }}
+                >
+                  Remover marcação
+                </p>
+                <h2
+                  id="removal-title"
+                  className="mt-2 text-2xl leading-7"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Disponibilizar este presente novamente?
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                onClick={closeRemovalModal}
+                disabled={removing}
+                aria-label="Fechar"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-stone-100"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <p
+              className="mt-4 rounded-2xl px-4 py-3 text-sm font-semibold leading-5"
+              style={{
+                background: "var(--color-primary-light)",
+                color: "var(--color-primary-dark)",
+              }}
+            >
+              {giftToRemove.title}
+            </p>
+
+            <form className="mt-6" onSubmit={confirmRemoval}>
+              <label
+                htmlFor="removal-password"
+                className="mb-1.5 block text-sm font-semibold"
+                style={{ color: "var(--text-primary)" }}
+              >
+                Senha para remover
+              </label>
+              <input
+                ref={removalPasswordRef}
+                id="removal-password"
+                type="password"
+                value={removalPassword}
+                onChange={(event) => setRemovalPassword(event.target.value)}
+                required
+                autoComplete="current-password"
+                placeholder="Digite a senha"
+                disabled={removing}
+              />
+
+              <p className="mt-3 text-xs leading-5" style={{ color: "var(--text-secondary)" }}>
+                A senha evita que outra pessoa apague uma compra por engano.
+              </p>
+
+              {error && (
+                <p
+                  role="alert"
+                  className="mt-3 rounded-xl px-4 py-3 text-sm font-semibold"
+                  style={{ background: "#fff0f0", color: "#9f3030" }}
+                >
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={removing}
+                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-4 font-semibold text-white disabled:cursor-wait disabled:opacity-70"
+                style={{ background: "#8f3030" }}
+              >
+                {removing ? (
+                  <LoaderCircle className="animate-spin" size={18} />
+                ) : (
+                  <LockKeyhole size={18} />
+                )}
+                {removing ? "Removendo..." : "Confirmar remoção"}
               </button>
             </form>
           </div>
