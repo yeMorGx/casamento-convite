@@ -48,15 +48,66 @@ cpSync(join(openNextDir, "assets"), assetsDir, { recursive: true });
 
 const workerEntryPath = join(serverDir, "index.js");
 const workerEntry = readFileSync(workerEntryPath, "utf8");
+const virtualFiles = {};
+
+function collectVirtualFiles(directory, relativeDirectory = "") {
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const relativePath = join(relativeDirectory, entry.name).replace(/\\/g, "/");
+    const absolutePath = join(directory, entry.name);
+
+    if (entry.isDirectory()) {
+      collectVirtualFiles(absolutePath, relativePath);
+      continue;
+    }
+
+    try {
+      virtualFiles[relativePath] = readFileSync(absolutePath, "utf8");
+    } catch {
+      // Binary assets are served through the Sites asset binding and do not
+      // need to be available to Next's server-side manifest reader.
+    }
+  }
+}
+
+collectVirtualFiles(join(openNextDir, "server-functions", "default", ".next"), ".next");
 const workerRuntimePrelude = `
+const __sitesFiles = ${JSON.stringify(virtualFiles)};
+const __sitesNormalizePath = (value) => {
+  let normalized = String(value).replace(/\\\\/g, "/");
+  const nextMarker = normalized.indexOf("/.next/");
+  if (nextMarker >= 0) normalized = normalized.slice(nextMarker + 1);
+  return normalized.replace(/^\\.\\//, "");
+};
+const __sitesFileExists = (value) => {
+  const normalized = __sitesNormalizePath(value);
+  return Object.prototype.hasOwnProperty.call(__sitesFiles, normalized)
+    || Object.keys(__sitesFiles).some((file) => file.startsWith(normalized + "/"));
+};
+const __sitesReadFile = (value, options) => {
+  const normalized = __sitesNormalizePath(value);
+  const contents = __sitesFiles[normalized];
+  if (contents === undefined) throw new Error("File not found: " + value);
+  const encoding = typeof options === "string" ? options : options?.encoding;
+  return encoding ? contents : new TextEncoder().encode(contents);
+};
 const __sitesPath = {
   join: (...parts) => parts.filter(Boolean).join("/").replace(/\\\\/g, "/").replace(/\\/{2,}/g, "/"),
   dirname: (value) => value.replace(/\\\\/g, "/").split("/").slice(0, -1).join("/") || ".",
 };
 const __sitesFs = {
   appendFileSync() {},
-  existsSync() { return false; },
+  existsSync(value) { return __sitesFileExists(value); },
   mkdirSync() {},
+  readFileSync(value, options) { return __sitesReadFile(value, options); },
+  promises: {
+    mkdir: async () => undefined,
+    readFile: async (value, options) => __sitesReadFile(value, options),
+    stat: async (value) => ({
+      isDirectory: () => Object.keys(__sitesFiles).some((file) => file.startsWith(__sitesNormalizePath(value) + "/")),
+      isFile: () => true,
+    }),
+    writeFile: async () => undefined,
+  },
   writeFileSync() {},
 };
 globalThis.require ??= (moduleName) => {
