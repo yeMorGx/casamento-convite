@@ -113,7 +113,11 @@ const __sitesFs = {
   },
   writeFileSync() {},
 };
-globalThis.require ??= (moduleName) => {
+const __sitesModule = {
+  _resolveFilename: (moduleName) => moduleName,
+  prototype: { require: () => ({}) },
+};
+const __sitesRequire = (moduleName) => {
   if (moduleName === "path" || moduleName === "node:path") return __sitesPathModule;
   if (moduleName === "fs" || moduleName === "node:fs") return __sitesFs;
   if (moduleName === "async_hooks" || moduleName === "node:async_hooks") {
@@ -145,8 +149,11 @@ globalThis.require ??= (moduleName) => {
       globalAgent: {},
     };
   }
+  if (moduleName === "module" || moduleName === "node:module") return __sitesModule;
   return {};
 };
+__sitesRequire.resolve = (moduleName) => moduleName;
+globalThis.require ??= __sitesRequire;
 `;
 if (!workerEntry.includes("const __sitesPath")) {
   writeFileSync(workerEntryPath, `${workerRuntimePrelude}\n${workerEntry}`, "utf8");
