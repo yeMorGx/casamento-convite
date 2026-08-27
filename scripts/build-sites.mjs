@@ -139,6 +139,12 @@ globalThis.require ??= (moduleName) => {
       setImmediate: () => Promise.resolve(),
     };
   }
+  if (moduleName === "http" || moduleName === "node:http" || moduleName === "https" || moduleName === "node:https") {
+    return {
+      Agent: class SitesAgent {},
+      globalAgent: {},
+    };
+  }
   return {};
 };
 `;
