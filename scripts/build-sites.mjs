@@ -68,6 +68,22 @@ globalThis.require ??= (moduleName) => {
   if (moduleName === "util" || moduleName === "node:util") {
     return { promisify: { custom: Symbol.for("nodejs.util.promisify.custom") } };
   }
+  if (moduleName === "os" || moduleName === "node:os") {
+    return { cpus: () => [{}] };
+  }
+  if (moduleName === "timers" || moduleName === "node:timers") {
+    return {
+      clearImmediate: globalThis.clearImmediate ?? (() => {}),
+      setImmediate: globalThis.setImmediate ?? ((callback, ...args) => {
+        queueMicrotask(() => callback(...args));
+      }),
+    };
+  }
+  if (moduleName === "timers/promises" || moduleName === "node:timers/promises") {
+    return {
+      setImmediate: () => Promise.resolve(),
+    };
+  }
   return {};
 };
 `;
