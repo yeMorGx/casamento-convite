@@ -65,6 +65,9 @@ globalThis.require ??= (moduleName) => {
   if (moduleName === "async_hooks" || moduleName === "node:async_hooks") {
     return { AsyncLocalStorage: globalThis.AsyncLocalStorage };
   }
+  if (moduleName === "util" || moduleName === "node:util") {
+    return { promisify: { custom: Symbol.for("nodejs.util.promisify.custom") } };
+  }
   return {};
 };
 `;
