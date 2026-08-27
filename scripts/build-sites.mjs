@@ -71,6 +71,8 @@ function collectVirtualFiles(directory, relativeDirectory = "") {
 
 collectVirtualFiles(join(openNextDir, "server-functions", "default", ".next"), ".next");
 const workerRuntimePrelude = `
+import * as __sitesStream from "node:stream";
+import * as __sitesUtil from "node:util";
 const __sitesFiles = ${JSON.stringify(virtualFiles)};
 const __sitesNormalizePath = (value) => {
   let normalized = String(value).replace(/\\\\/g, "/");
@@ -117,8 +119,9 @@ globalThis.require ??= (moduleName) => {
     return { AsyncLocalStorage: globalThis.AsyncLocalStorage };
   }
   if (moduleName === "util" || moduleName === "node:util") {
-    return { promisify: { custom: Symbol.for("nodejs.util.promisify.custom") } };
+    return __sitesUtil;
   }
+  if (moduleName === "stream" || moduleName === "node:stream") return __sitesStream;
   if (moduleName === "os" || moduleName === "node:os") {
     return { cpus: () => [{}] };
   }
