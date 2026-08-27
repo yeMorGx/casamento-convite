@@ -73,6 +73,7 @@ collectVirtualFiles(join(openNextDir, "server-functions", "default", ".next"), "
 const workerRuntimePrelude = `
 import * as __sitesStream from "node:stream";
 import * as __sitesUtil from "node:util";
+import * as __sitesPathModule from "node:path";
 const __sitesFiles = ${JSON.stringify(virtualFiles)};
 const __sitesNormalizePath = (value) => {
   let normalized = String(value).replace(/\\\\/g, "/");
@@ -113,7 +114,7 @@ const __sitesFs = {
   writeFileSync() {},
 };
 globalThis.require ??= (moduleName) => {
-  if (moduleName === "path" || moduleName === "node:path") return __sitesPath;
+  if (moduleName === "path" || moduleName === "node:path") return __sitesPathModule;
   if (moduleName === "fs" || moduleName === "node:fs") return __sitesFs;
   if (moduleName === "async_hooks" || moduleName === "node:async_hooks") {
     return { AsyncLocalStorage: globalThis.AsyncLocalStorage };
