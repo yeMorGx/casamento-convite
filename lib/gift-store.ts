@@ -3,8 +3,6 @@ import path from "node:path";
 
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-import { giftClaimsTableSql } from "@/db/schema";
-
 export type GiftClaim = {
   giftId: string;
   buyerName: string | null;
@@ -52,12 +50,7 @@ async function getD1Database() {
   }
 }
 
-async function ensureD1Schema(db: D1Database) {
-  await db.prepare(giftClaimsTableSql).run();
-}
-
 async function readClaimsFromD1(db: D1Database): Promise<GiftClaims> {
-  await ensureD1Schema(db);
   const result = await db
     .prepare(
       "SELECT gift_id, buyer_name, purchased_at FROM gift_claims ORDER BY purchased_at ASC",
@@ -77,7 +70,6 @@ async function readClaimsFromD1(db: D1Database): Promise<GiftClaims> {
 }
 
 async function claimGiftInD1(db: D1Database, claim: GiftClaim) {
-  await ensureD1Schema(db);
   const result = await db
     .prepare(
       "INSERT OR IGNORE INTO gift_claims (gift_id, buyer_name, purchased_at) VALUES (?, ?, ?)",
@@ -89,7 +81,6 @@ async function claimGiftInD1(db: D1Database, claim: GiftClaim) {
 }
 
 async function removeGiftClaimFromD1(db: D1Database, giftId: string) {
-  await ensureD1Schema(db);
   const result = await db
     .prepare("DELETE FROM gift_claims WHERE gift_id = ?")
     .bind(giftId)

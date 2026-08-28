@@ -17,7 +17,8 @@ export async function GET() {
   try {
     const claims = await getGiftClaims();
     return Response.json({ claims }, { headers: noStoreHeaders });
-  } catch {
+  } catch (error) {
+    console.error("Failed to load gift claims", error);
     return Response.json(
       { message: "Não foi possível carregar os presentes agora." },
       { status: 500, headers: noStoreHeaders },
@@ -83,7 +84,8 @@ export async function POST(request: Request) {
     }
 
     return Response.json({ claim }, { status: 201, headers: noStoreHeaders });
-  } catch {
+  } catch (error) {
+    console.error("Failed to claim gift", error);
     return Response.json(
       { message: "Não foi possível marcar o presente. Tente novamente." },
       { status: 500, headers: noStoreHeaders },
@@ -165,7 +167,8 @@ export async function DELETE(request: Request) {
     }
 
     return Response.json({ giftId }, { headers: noStoreHeaders });
-  } catch {
+  } catch (error) {
+    console.error("Failed to remove gift claim", error);
     return Response.json(
       { message: "Não foi possível remover a marcação. Tente novamente." },
       { status: 500, headers: noStoreHeaders },
