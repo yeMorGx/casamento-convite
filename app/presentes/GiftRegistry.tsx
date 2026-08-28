@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   Check,
@@ -288,6 +289,40 @@ export default function GiftRegistry() {
                           : "rgba(255,255,255,.78)",
                       }}
                     >
+                      <div
+                        className="relative mb-5 aspect-[16/10] overflow-hidden rounded-2xl border"
+                        style={{
+                          borderColor: claim
+                            ? "rgba(77,118,81,.25)"
+                            : "var(--color-primary-light)",
+                          background: "rgba(255,255,255,.9)",
+                        }}
+                      >
+                        <Image
+                          src={gift.imageUrl}
+                          alt={`Foto de ${gift.title}`}
+                          fill
+                          sizes="(max-width: 768px) calc(100vw - 72px), 704px"
+                          className="object-contain p-3"
+                        />
+
+                        {claim && (
+                          <div className="absolute inset-0 grid place-items-center bg-white/70 backdrop-blur-[1px]">
+                            <span
+                              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold shadow-sm"
+                              style={{
+                                color: "var(--color-green-dark)",
+                                background: "rgba(238,247,239,.96)",
+                                border: "1px solid rgba(77,118,81,.28)",
+                              }}
+                            >
+                              <CheckCircle2 size={17} />
+                              Já comprado
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
                       <div className="flex items-start justify-between gap-4">
                         <h3
                           className="text-base font-semibold leading-6 md:text-lg"
@@ -318,20 +353,35 @@ export default function GiftRegistry() {
                       )}
 
                       <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-                        <a
-                          href={gift.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm"
-                          style={{
-                            borderColor: "var(--color-primary-dark)",
-                            color: "var(--color-primary-dark)",
-                            background: "rgba(255,255,255,.75)",
-                          }}
-                        >
-                          Ver presente
-                          <ExternalLink size={16} />
-                        </a>
+                        {claim ? (
+                          <span
+                            aria-disabled="true"
+                            className="inline-flex flex-1 cursor-not-allowed items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold"
+                            style={{
+                              borderColor: "rgba(77,118,81,.3)",
+                              color: "var(--color-green-dark)",
+                              background: "rgba(255,255,255,.56)",
+                            }}
+                          >
+                            <LockKeyhole size={16} />
+                            Link bloqueado
+                          </span>
+                        ) : (
+                          <a
+                            href={gift.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm"
+                            style={{
+                              borderColor: "var(--color-primary-dark)",
+                              color: "var(--color-primary-dark)",
+                              background: "rgba(255,255,255,.75)",
+                            }}
+                          >
+                            Ver presente
+                            <ExternalLink size={16} />
+                          </a>
+                        )}
 
                         <button
                           type="button"
