@@ -35,7 +35,9 @@ type GiftClaimRow = {
 
 const dataDirectory = path.join(process.cwd(), "data");
 const claimsFile = path.join(dataDirectory, "gift-claims.json");
+const claimsBlobPath = "gift-registry/gift-claims.json";
 const isProduction = process.env.NODE_ENV === "production";
+const hasVercelBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
 const sharedState = globalThis as typeof globalThis & {
   giftClaimWriteQueue?: Promise<void>;
@@ -87,6 +89,77 @@ async function removeGiftClaimFromD1(db: D1Database, giftId: string) {
     .run();
 
   return (result.meta?.changes ?? 0) > 0;
+}
+
+async function readClaimsFromBlob() {
+  const { get } = await import("@vercel/blob");
+  const result = await get(claimsBlobPath, {
+    access: "private",
+    useCache: false,
+  });
+
+  if (!result || result.statusCode !== 200) {
+    return { claims: {} as GiftClaims, etag: null as string | null };
+  }
+
+  const claims = (await new Response(result.stream).json()) as GiftClaims;
+  return { claims, etag: result.blob.etag };
+}
+
+async function writeClaimsToBlob(claims: GiftClaims, etag: string | null) {
+  const { put } = await import("@vercel/blob");
+  await put(claimsBlobPath, JSON.stringify(claims), {
+    access: "private",
+    contentType: "application/json",
+    allowOverwrite: Boolean(etag),
+    ...(etag ? { ifMatch: etag } : {}),
+  });
+}
+
+async function updateClaimsInBlob(
+  update: (claims: GiftClaims) => GiftClaims | null,
+) {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const snapshot = await readClaimsFromBlob();
+    const updatedClaims = update(snapshot.claims);
+
+    if (!updatedClaims) {
+      return false;
+    }
+
+    try {
+      await writeClaimsToBlob(updatedClaims, snapshot.etag);
+      return true;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  throw lastError;
+}
+
+async function claimGiftInBlob(claim: GiftClaim) {
+  return updateClaimsInBlob((claims) => {
+    if (claims[claim.giftId]) {
+      return null;
+    }
+
+    return { ...claims, [claim.giftId]: claim };
+  });
+}
+
+async function removeGiftClaimFromBlob(giftId: string) {
+  return updateClaimsInBlob((claims) => {
+    if (!claims[giftId]) {
+      return null;
+    }
+
+    const updatedClaims = { ...claims };
+    delete updatedClaims[giftId];
+    return updatedClaims;
+  });
 }
 
 async function readClaimsFile(): Promise<GiftClaims> {
@@ -159,6 +232,10 @@ async function removeGiftClaimLocally(giftId: string) {
 }
 
 export async function getGiftClaims() {
+  if (hasVercelBlob) {
+    return (await readClaimsFromBlob()).claims;
+  }
+
   const db = await getD1Database();
 
   if (db) {
@@ -173,6 +250,10 @@ export async function getGiftClaims() {
 }
 
 export async function claimGift(claim: GiftClaim) {
+  if (hasVercelBlob) {
+    return claimGiftInBlob(claim);
+  }
+
   const db = await getD1Database();
 
   if (db) {
@@ -187,6 +268,10 @@ export async function claimGift(claim: GiftClaim) {
 }
 
 export async function removeGiftClaim(giftId: string) {
+  if (hasVercelBlob) {
+    return removeGiftClaimFromBlob(giftId);
+  }
+
   const db = await getD1Database();
 
   if (db) {
